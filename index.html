@@ -6,7 +6,6 @@
 <title>Portfolio Comparison</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0f0f0e;--bg2:#171715;--bg3:#1e1e1b;--bg4:#252521;
@@ -16,20 +15,15 @@
   --amber:#f5b944;--amber-bg:rgba(245,185,68,0.1);
   --red:#f07070;--red-bg:rgba(240,112,112,0.1);
   --blue:#74b3f5;--blue-bg:rgba(116,179,245,0.1);
-  --accent:#4cd9a0;
-  --r:10px;--r2:14px;
+  --accent:#4cd9a0;--r:10px;--r2:14px;
 }
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5;padding-bottom:40px}
-
-/* HEADER */
 .header{padding:20px 16px 14px;border-bottom:0.5px solid var(--bdr)}
 .header-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px}
-.header h1{font-family:'DM Serif Display',serif;font-size:22px;color:var(--txt);letter-spacing:-.02em}
+.header h1{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.02em}
 .header-date{font-size:11px;color:var(--txt3)}
 .header p{font-size:12px;color:var(--txt3)}
-
-/* INPUTS */
 .inputs-section{background:var(--bg2);border-bottom:0.5px solid var(--bdr);padding:14px 16px}
 .inputs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .input-group{display:flex;flex-direction:column;gap:5px}
@@ -40,48 +34,55 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font
 .input-row input::-webkit-inner-spin-button{-webkit-appearance:none}
 .stepup-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:9px 12px;background:var(--bg3);border-radius:8px;border:0.5px solid var(--bdr)}
 .stepup-label{font-size:12px;color:var(--txt2)}
-.stepup-right{display:flex;align-items:center;gap:8px}
 .toggle-wrap{display:flex;gap:4px}
 .toggle-btn{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
 .toggle-btn.active{background:var(--green-bg);color:var(--green);border-color:var(--green)}
-
-/* QUICK BTNS */
 .quick-row{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--bg2);border-bottom:0.5px solid var(--bdr)}
 .quick-row::-webkit-scrollbar{display:none}
 .qbtn{font-size:11px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt2);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0;transition:.15s}
-.qbtn:active,.qbtn.sel{background:var(--green-bg);color:var(--green);border-color:var(--green)}
-
-/* SUMMARY KPI STRIP */
+.qbtn.sel{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+/* KPI CARDS as nav buttons */
 .kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:12px 16px}
-.kpi{background:var(--bg2);border-radius:var(--r);padding:11px 12px;border:0.5px solid var(--bdr);position:relative;overflow:hidden}
-.kpi.winner{border-color:rgba(76,217,160,.35)}
-.kpi.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(76,217,160,.05),transparent);pointer-events:none}
-.kpi-label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
-.kpi-val{font-family:'DM Serif Display',serif;font-size:24px;color:var(--txt);letter-spacing:-.02em;line-height:1.1}
-.kpi.winner .kpi-val{color:var(--accent)}
+.kpi{background:var(--bg2);border-radius:var(--r);padding:11px 12px;border:0.5px solid var(--bdr);position:relative;overflow:hidden;cursor:pointer;transition:.18s;-webkit-tap-highlight-color:transparent;user-select:none}
+.kpi:active{transform:scale(.97)}
+.kpi.sel-r{border-color:var(--accent)!important}
+.kpi.sel-r::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(76,217,160,.07),transparent);pointer-events:none}
+.kpi.winner-card{border-color:rgba(76,217,160,.25)}
+.kpi-toprow{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3px}
+.kpi-label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em}
+.kpi-arrow{font-size:11px;color:var(--txt3);transition:.15s}
+.kpi.sel-r .kpi-arrow{color:var(--accent)}
+.kpi-val{font-family:'DM Serif Display',serif;font-size:24px;letter-spacing:-.02em;line-height:1.1}
+.kpi.sel-r .kpi-val,.kpi.winner-card .kpi-val{color:var(--accent)}
 .kpi-sub{font-size:10px;color:var(--txt3);margin-top:3px}
 .kpi-badge{display:inline-block;font-size:9px;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:4px;margin-top:5px;font-weight:600;letter-spacing:.04em}
-
+.kpi-hint{font-size:9px;color:var(--txt3);margin-top:4px;font-style:italic}
 /* TABS */
 .tabs-wrap{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:0.5px solid var(--bdr);overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tabs-wrap::-webkit-scrollbar{display:none}
 .tabs{display:flex;padding:0 12px;white-space:nowrap}
 .tab{font-size:12px;padding:11px 13px;cursor:pointer;border:none;background:none;color:var(--txt3);font-family:'DM Sans',sans-serif;font-weight:500;border-bottom:2px solid transparent;flex-shrink:0;letter-spacing:.01em;transition:.15s}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
 /* PANELS */
 .panel{display:none;padding:12px 16px}
 .panel.active{display:block}
 .sec-title{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;margin-top:4px}
-
+/* BANNER */
+.sel-banner{background:rgba(76,217,160,.08);border:0.5px solid rgba(76,217,160,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.sel-banner-l{font-size:12px;color:var(--txt2)}
+.sel-banner-r{font-size:13px;font-weight:600;color:var(--accent)}
+/* R SELECTOR PILLS */
+.r-selector{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.r-btn{font-size:11px;padding:5px 13px;border-radius:20px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s;font-weight:500}
+.r-btn.active{background:var(--green-bg);color:var(--green);border-color:var(--green)}
 /* METRIC CARDS */
 .metric-card{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:8px;overflow:hidden}
 .metric-top{padding:10px 14px 6px;display:flex;align-items:baseline;justify-content:space-between}
 .metric-name{font-size:11px;color:var(--txt3);font-weight:500;letter-spacing:.03em}
 .metric-tip{font-size:10px;color:var(--txt3);font-style:italic}
-.metric-row{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.metric-row{display:grid;grid-template-columns:1fr 1fr}
 .mc{padding:9px 14px 11px;border-right:0.5px solid var(--bdr)}
-.mc:last-child,.mc:nth-child(even){border-right:none}
+.mc:nth-child(even){border-right:none}
 .mc:nth-child(3),.mc:nth-child(4){border-top:0.5px solid var(--bdr)}
 .mc-label{font-size:9px;color:var(--txt3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px}
 .mc-val{font-size:15px;font-weight:600;color:var(--txt)}
@@ -91,54 +92,56 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font
 .badge{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;font-weight:700;margin-left:5px;vertical-align:middle}
 .b-best{background:var(--green-bg);color:var(--green)}
 .b-worst{background:var(--red-bg);color:var(--red)}
-
-/* PLAIN ENGLISH CARD */
+.mc.hl-sel{background:rgba(76,217,160,.05)}
+/* PLAIN ENGLISH */
 .plain-card{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:8px;padding:14px}
 .plain-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--bdr)}
 .plain-row:last-child{border-bottom:none;padding-bottom:0}
 .plain-row:first-child{padding-top:0}
 .plain-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center;margin-top:1px}
-.plain-content{}
 .plain-title{font-size:12px;font-weight:600;color:var(--txt);margin-bottom:2px}
 .plain-desc{font-size:12px;color:var(--txt2);line-height:1.5}
-.highlight-num{color:var(--accent);font-weight:600}
-
-/* CHART */
+.hn{color:var(--accent);font-weight:600}
+/* CAGR TABLE */
+.cagr-wrap{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:10px;overflow:hidden}
+.cagr-head{display:grid;grid-template-columns:80px repeat(4,1fr);background:var(--bg3);border-bottom:0.5px solid var(--bdr)}
+.cc{padding:8px 4px;font-size:9px;color:var(--txt3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;text-align:center;border-right:0.5px solid var(--bdr)}
+.cc:last-child{border-right:none}
+.cc:first-child{text-align:left;padding-left:10px}
+.cagr-row{display:grid;grid-template-columns:80px repeat(4,1fr);border-bottom:0.5px solid var(--bdr)}
+.cagr-row:last-child{border-bottom:none}
+.cv{padding:9px 4px;font-size:12px;font-weight:500;color:var(--txt);text-align:center;border-right:0.5px solid var(--bdr)}
+.cv:last-child{border-right:none}
+.cv:first-child{font-size:10px;color:var(--txt2);text-align:left;padding-left:10px;font-weight:500}
+.cv.top{color:var(--green);font-weight:700}
+.cv.sel-col{background:rgba(76,217,160,.05)}
+.csub{font-size:9px;color:var(--txt3);display:block;margin-top:1px}
+.cagr-note{font-size:10px;color:var(--txt3);padding:10px 14px;line-height:1.55;border-top:0.5px solid var(--bdr)}
+/* CHARTS */
 .chart-wrap{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:10px;overflow:hidden}
-.chart-head{padding:12px 14px 0;display:flex;align-items:center;justify-content:space-between}
+.chart-head{padding:12px 14px 0;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px}
 .chart-title{font-size:12px;font-weight:600;color:var(--txt)}
-.chart-legend{display:flex;gap:12px;flex-wrap:wrap}
+.chart-legend{display:flex;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--txt3)}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 canvas{display:block;width:100%!important}
-.chart-tabs{display:flex;gap:6px;padding:10px 14px 0}
+.chart-tabs{display:flex;gap:6px;padding:10px 14px 0;flex-wrap:wrap}
 .ctab{font-size:10px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
 .ctab.active{background:var(--green-bg);color:var(--green);border-color:var(--green)}
-
-/* CAGR TABLE */
-.cagr-card{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:10px;overflow:hidden}
-.cagr-head{display:grid;grid-template-columns:60px repeat(4,1fr);background:var(--bg3);border-bottom:0.5px solid var(--bdr)}
-.cagr-cell{padding:8px 8px;font-size:10px;color:var(--txt3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;text-align:center;border-right:0.5px solid var(--bdr)}
-.cagr-cell:last-child{border-right:none}
-.cagr-cell:first-child{text-align:left}
-.cagr-row{display:grid;grid-template-columns:60px repeat(4,1fr);border-bottom:0.5px solid var(--bdr)}
-.cagr-row:last-child{border-bottom:none}
-.cagr-val{padding:9px 8px;font-size:13px;font-weight:500;color:var(--txt);text-align:center;border-right:0.5px solid var(--bdr)}
-.cagr-val:last-child{border-right:none}
-.cagr-val:first-child{font-size:11px;color:var(--txt3);text-align:left;font-weight:500}
-.cagr-val.top{color:var(--green);font-weight:600}
-
-/* FORECAST PANEL */
+/* FORECAST */
 .forecast-card{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:8px;overflow:hidden}
-.forecast-head{padding:12px 14px;border-bottom:0.5px solid var(--bdr);display:flex;justify-content:space-between;align-items:center}
+.forecast-head{padding:12px 14px;border-bottom:0.5px solid var(--bdr)}
 .forecast-title{font-size:13px;font-weight:600;color:var(--txt)}
-.forecast-sub{font-size:10px;color:var(--txt3)}
+.forecast-sub{font-size:10px;color:var(--txt3);margin-top:2px}
 .forecast-body{padding:12px 14px}
-.f-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--bdr)}
+.f-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--bdr)}
 .f-row:last-child{border-bottom:none}
-.f-label{font-size:12px;color:var(--txt2)}
+.f-label{font-size:12px;color:var(--txt2);flex:1}
+.f-right{display:flex;align-items:baseline;gap:6px}
 .f-val{font-size:13px;font-weight:600;color:var(--txt)}
 .f-val.accent{color:var(--accent)}
+.f-val.bad{color:var(--red)}
+.f-mult{font-size:10px;color:var(--txt3)}
 .growth-bar{height:4px;background:var(--bg4);border-radius:2px;margin-top:8px;overflow:hidden}
 .growth-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--amber));transition:width .6s ease}
 .milestone-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
@@ -146,7 +149,6 @@ canvas{display:block;width:100%!important}
 .ms-label{font-size:10px;color:var(--txt3);margin-bottom:3px}
 .ms-val{font-size:15px;font-weight:600;color:var(--accent);font-family:'DM Serif Display',serif}
 .ms-sub{font-size:10px;color:var(--txt3);margin-top:2px}
-
 /* FUND CARDS */
 .fund-card{background:var(--bg2);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:8px;overflow:hidden}
 .fund-header{padding:12px 14px 8px;border-bottom:0.5px solid var(--bdr)}
@@ -168,53 +170,35 @@ canvas{display:block;width:100%!important}
 .code-row{background:var(--bg3);border-radius:7px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}
 .code-label{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;font-weight:500}
 .code-val{font-size:11px;font-weight:500;color:var(--txt);font-family:monospace;word-break:break-all;text-align:right}
-
-/* VERDICT */
 .verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .verdict-card{background:var(--bg2);border-radius:var(--r);padding:12px;border:0.5px solid var(--bdr)}
 .verdict-card.winner{border-color:rgba(76,217,160,.35);background:rgba(76,217,160,.04)}
 .verdict-r{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--txt3);margin-bottom:4px;font-weight:600}
 .verdict-main{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:4px}
 .verdict-desc{font-size:11px;color:var(--txt2);line-height:1.4}
-
-/* NOTE */
 .note{font-size:11px;color:var(--txt2);line-height:1.6;padding:10px 12px;border-left:2px solid var(--bdr2);margin-top:8px;background:var(--bg2);border-radius:0 var(--r) var(--r) 0}
 .disclaimer{font-size:10px;color:var(--txt3);padding:12px 16px;line-height:1.6;text-align:center}
-
-/* LAKH CRORE HELPERS */
 .lc-big{font-family:'DM Serif Display',serif;font-size:20px;letter-spacing:-.01em}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div class="header-top">
-    <h1>Portfolio Comparison</h1>
-    <span class="header-date">16 Mar 2026</span>
-  </div>
+  <div class="header-top"><h1>Portfolio Comparison</h1><span class="header-date">16 Mar 2026</span></div>
   <p>4 experiments · <span id="header-sip">₹10,000</span>/mo · Rf 6.5%</p>
 </div>
-
-<!-- INPUTS -->
 <div class="inputs-section">
   <div class="inputs-grid">
     <div class="input-group">
       <div class="input-label">Monthly SIP</div>
-      <div class="input-row">
-        <span class="input-prefix">₹</span>
-        <input type="number" id="sip-input" value="10000" min="500" max="10000000" step="500" oninput="updateAll(this.value)">
-      </div>
+      <div class="input-row"><span class="input-prefix">₹</span><input type="number" id="sip-input" value="10000" min="500" max="10000000" step="500" oninput="updateAll(this.value)"></div>
     </div>
     <div class="input-group">
       <div class="input-label">Annual Step-Up</div>
-      <div class="input-row">
-        <input type="number" id="stepup-input" value="10" min="0" max="50" step="1" oninput="updateAll()">
-        <span class="input-prefix">%</span>
-      </div>
+      <div class="input-row"><input type="number" id="stepup-input" value="10" min="0" max="50" step="1" oninput="updateAll()"><span class="input-prefix">%</span></div>
     </div>
   </div>
   <div class="stepup-row">
-    <span class="stepup-label">Step-Up: increase SIP by this % each year</span>
+    <span class="stepup-label">Increase SIP each year by this %</span>
     <div class="toggle-wrap">
       <button class="toggle-btn active" id="su-on" onclick="toggleStepup(true)">On</button>
       <button class="toggle-btn" id="su-off" onclick="toggleStepup(false)">Off</button>
@@ -223,68 +207,62 @@ canvas{display:block;width:100%!important}
 </div>
 <div class="quick-row">
   <button class="qbtn" onclick="setSIP(5000)">₹5K</button>
-  <button class="qbtn sel" id="q10" onclick="setSIP(10000)">₹10K</button>
+  <button class="qbtn sel" onclick="setSIP(10000)">₹10K</button>
   <button class="qbtn" onclick="setSIP(25000)">₹25K</button>
   <button class="qbtn" onclick="setSIP(50000)">₹50K</button>
   <button class="qbtn" onclick="setSIP(100000)">₹1L</button>
   <button class="qbtn" onclick="setSIP(200000)">₹2L</button>
 </div>
-
-<!-- KPI STRIP (updates dynamically) -->
 <div class="kpi-strip">
-  <div class="kpi">
-    <div class="kpi-label">R1 · Replaced</div>
-    <div class="kpi-val" id="kpi-r1-ret">16.8%</div>
+  <div class="kpi" id="kpi-r1" onclick="selectR('r1')">
+    <div class="kpi-toprow"><span class="kpi-label">R1 · Replaced</span><span class="kpi-arrow">›</span></div>
+    <div class="kpi-val">16.8%</div>
     <div class="kpi-sub">Sharpe 0.80 · Vol 12.9%</div>
+    <div class="kpi-hint">tap to select</div>
   </div>
-  <div class="kpi">
-    <div class="kpi-label">R2 · Baseline equal</div>
-    <div class="kpi-val" id="kpi-r2-ret">16.2%</div>
+  <div class="kpi" id="kpi-r2" onclick="selectR('r2')">
+    <div class="kpi-toprow"><span class="kpi-label">R2 · Baseline</span><span class="kpi-arrow">›</span></div>
+    <div class="kpi-val">16.2%</div>
     <div class="kpi-sub">Sharpe 0.62 · Vol 15.7%</div>
+    <div class="kpi-hint">tap to select</div>
   </div>
-  <div class="kpi">
-    <div class="kpi-label">R3 · Baseline+replaced</div>
-    <div class="kpi-val" id="kpi-r3-ret">16.7%</div>
+  <div class="kpi" id="kpi-r3" onclick="selectR('r3')">
+    <div class="kpi-toprow"><span class="kpi-label">R3 · Combined</span><span class="kpi-arrow">›</span></div>
+    <div class="kpi-val">16.7%</div>
     <div class="kpi-sub">Sharpe 0.82 · Vol 12.4%</div>
+    <div class="kpi-hint">tap to select</div>
   </div>
-  <div class="kpi winner">
-    <div class="kpi-label">R4 · All in</div>
-    <div class="kpi-val" id="kpi-r4-ret">16.6%</div>
+  <div class="kpi winner-card sel-r" id="kpi-r4" onclick="selectR('r4')">
+    <div class="kpi-toprow"><span class="kpi-label">R4 · All in</span><span class="kpi-arrow">›</span></div>
+    <div class="kpi-val">16.6%</div>
     <div class="kpi-sub">Sharpe 0.84 · Vol 12.1%</div>
     <div class="kpi-badge">★ Best overall</div>
   </div>
 </div>
-
-<!-- TABS -->
 <div class="tabs-wrap">
   <div class="tabs">
     <button class="tab active" onclick="show('compare',this)">Compare</button>
     <button class="tab" onclick="show('plain',this)">Plain English</button>
     <button class="tab" onclick="show('forecast',this)">Forecast</button>
     <button class="tab" onclick="show('chart',this)">Chart</button>
-    <button class="tab" onclick="show('r1',this)">R1 Funds</button>
-    <button class="tab" onclick="show('r2',this)">R2 Funds</button>
-    <button class="tab" onclick="show('r3',this)">R3 Funds</button>
-    <button class="tab" onclick="show('r4',this)">R4 Funds</button>
+    <button class="tab" onclick="show('funds',this)">Funds</button>
   </div>
 </div>
 
-<!-- COMPARE PANEL -->
+<!-- COMPARE -->
 <div id="compare" class="panel active">
   <div class="sec-title">head-to-head metrics</div>
-
   <div class="metric-card">
     <div class="metric-top"><span class="metric-name">Expected annual return</span><span class="metric-tip">higher is better</span></div>
     <div class="metric-row">
-      <div class="mc"><div class="mc-label">R1</div><div class="mc-val">16.8%</div></div>
-      <div class="mc"><div class="mc-label">R2</div><div class="mc-val bad">16.2%<span class="badge b-worst">lowest</span></div></div>
-      <div class="mc"><div class="mc-label">R3</div><div class="mc-val">16.7%</div></div>
-      <div class="mc"><div class="mc-label">R4</div><div class="mc-val good">16.8%<span class="badge b-best">highest</span></div></div>
+      <div class="mc" id="mc-ret-r1"><div class="mc-label">R1</div><div class="mc-val">16.8%</div></div>
+      <div class="mc" id="mc-ret-r2"><div class="mc-label">R2</div><div class="mc-val bad">16.2%<span class="badge b-worst">lowest</span></div></div>
+      <div class="mc" id="mc-ret-r3"><div class="mc-label">R3</div><div class="mc-val">16.7%</div></div>
+      <div class="mc" id="mc-ret-r4"><div class="mc-label">R4</div><div class="mc-val good">16.8%<span class="badge b-best">highest</span></div></div>
     </div>
   </div>
-
   <div class="metric-card">
-    <div class="metric-top"><span class="metric-name">Annual volatility (risk)</span><span class="metric-tip">lower is better</span></div>
+    <div class="metric-top"><span class="metric-name">Annual volatility</span><span class="metric-tip">lower is better</span></div>
     <div class="metric-row">
       <div class="mc"><div class="mc-label">R1</div><div class="mc-val">12.9%</div></div>
       <div class="mc"><div class="mc-label">R2</div><div class="mc-val bad">15.7%<span class="badge b-worst">riskiest</span></div></div>
@@ -292,9 +270,8 @@ canvas{display:block;width:100%!important}
       <div class="mc"><div class="mc-label">R4</div><div class="mc-val good">12.1%<span class="badge b-best">safest</span></div></div>
     </div>
   </div>
-
   <div class="metric-card">
-    <div class="metric-top"><span class="metric-name">Sharpe ratio</span><span class="metric-tip">return earned per unit of risk</span></div>
+    <div class="metric-top"><span class="metric-name">Sharpe ratio</span><span class="metric-tip">return per unit of risk</span></div>
     <div class="metric-row">
       <div class="mc"><div class="mc-label">R1</div><div class="mc-val">0.80</div></div>
       <div class="mc"><div class="mc-label">R2</div><div class="mc-val bad">0.62<span class="badge b-worst">worst</span></div></div>
@@ -302,9 +279,8 @@ canvas{display:block;width:100%!important}
       <div class="mc"><div class="mc-label">R4</div><div class="mc-val good">0.84<span class="badge b-best">best</span></div></div>
     </div>
   </div>
-
   <div class="metric-card">
-    <div class="metric-top"><span class="metric-name">Max drawdown (worst crash drop)</span><span class="metric-tip">closer to 0 is safer</span></div>
+    <div class="metric-top"><span class="metric-name">Max drawdown</span><span class="metric-tip">worst crash drop ever</span></div>
     <div class="metric-row">
       <div class="mc"><div class="mc-label">R1</div><div class="mc-val">−19.1%</div></div>
       <div class="mc"><div class="mc-label">R2</div><div class="mc-val bad">−20.7%<span class="badge b-worst">worst</span></div></div>
@@ -312,169 +288,186 @@ canvas{display:block;width:100%!important}
       <div class="mc"><div class="mc-label">R4</div><div class="mc-val good">−14.2%<span class="badge b-best">safest</span></div></div>
     </div>
   </div>
-
   <div class="metric-card">
-    <div class="metric-top"><span class="metric-name">15-yr median wealth</span><span class="metric-tip" id="proj15-label">₹10k/mo flat</span></div>
+    <div class="metric-top"><span class="metric-name">15-yr median wealth</span><span class="metric-tip" id="proj15-lbl">—</span></div>
     <div class="metric-row">
-      <div class="mc"><div class="mc-label">R1</div><div class="mc-val lc-big" id="cmp-15r1">₹67.0L</div><div class="mc-sub" id="cmp-15r1-x">3.7×</div></div>
-      <div class="mc"><div class="mc-label">R2</div><div class="mc-val lc-big bad" id="cmp-15r2">₹61.6L</div><div class="mc-sub" id="cmp-15r2-x">3.4×</div></div>
-      <div class="mc"><div class="mc-label">R3</div><div class="mc-val lc-big" id="cmp-15r3">₹65.5L</div><div class="mc-sub" id="cmp-15r3-x">3.6×</div></div>
-      <div class="mc"><div class="mc-label">R4</div><div class="mc-val lc-big good" id="cmp-15r4">₹66.1L</div><div class="mc-sub" id="cmp-15r4-x">3.7×</div></div>
+      <div class="mc"><div class="mc-label">R1</div><div class="mc-val lc-big" id="cmp15r1">—</div><div class="mc-sub" id="cmp15r1x">—</div></div>
+      <div class="mc"><div class="mc-label">R2</div><div class="mc-val lc-big bad" id="cmp15r2">—</div><div class="mc-sub" id="cmp15r2x">—</div></div>
+      <div class="mc"><div class="mc-label">R3</div><div class="mc-val lc-big" id="cmp15r3">—</div><div class="mc-sub" id="cmp15r3x">—</div></div>
+      <div class="mc"><div class="mc-label">R4</div><div class="mc-val lc-big good" id="cmp15r4">—</div><div class="mc-sub" id="cmp15r4x">—</div></div>
     </div>
   </div>
-
   <div class="metric-card">
-    <div class="metric-top"><span class="metric-name">20-yr median wealth</span><span class="metric-tip" id="proj20-label">₹10k/mo flat</span></div>
+    <div class="metric-top"><span class="metric-name">20-yr median wealth</span><span class="metric-tip" id="proj20-lbl">—</span></div>
     <div class="metric-row">
-      <div class="mc"><div class="mc-label">R1</div><div class="mc-val lc-big" id="cmp-20r1">₹1.75 Cr</div><div class="mc-sub" id="cmp-20r1-x">7.3×</div></div>
-      <div class="mc"><div class="mc-label">R2</div><div class="mc-val lc-big bad" id="cmp-20r2">₹1.51 Cr</div><div class="mc-sub" id="cmp-20r2-x">6.3×</div></div>
-      <div class="mc"><div class="mc-label">R3</div><div class="mc-val lc-big" id="cmp-20r3">₹1.72 Cr</div><div class="mc-sub" id="cmp-20r3-x">7.2×</div></div>
-      <div class="mc"><div class="mc-label">R4</div><div class="mc-val lc-big good" id="cmp-20r4">₹1.72 Cr</div><div class="mc-sub" id="cmp-20r4-x">7.2×</div></div>
+      <div class="mc"><div class="mc-label">R1</div><div class="mc-val lc-big" id="cmp20r1">—</div><div class="mc-sub" id="cmp20r1x">—</div></div>
+      <div class="mc"><div class="mc-label">R2</div><div class="mc-val lc-big bad" id="cmp20r2">—</div><div class="mc-sub" id="cmp20r2x">—</div></div>
+      <div class="mc"><div class="mc-label">R3</div><div class="mc-val lc-big" id="cmp20r3">—</div><div class="mc-sub" id="cmp20r3x">—</div></div>
+      <div class="mc"><div class="mc-label">R4</div><div class="mc-val lc-big good" id="cmp20r4">—</div><div class="mc-sub" id="cmp20r4x">—</div></div>
     </div>
   </div>
-
   <div class="sec-title" style="margin-top:14px">verdict</div>
   <div class="verdict-grid">
-    <div class="verdict-card"><div class="verdict-r">R1 · Replaced</div><div class="verdict-main">Strong & simple</div><div class="verdict-desc">6 funds. Excellent risk-return. Good for those who want simplicity.</div></div>
-    <div class="verdict-card"><div class="verdict-r">R2 · Baseline</div><div class="verdict-main" style="color:var(--red)">Weakest overall</div><div class="verdict-desc">No gold or US exposure. Highest risk and lowest efficiency.</div></div>
-    <div class="verdict-card"><div class="verdict-r">R3 · Combined</div><div class="verdict-main">Very good</div><div class="verdict-desc">Best drawdown control of all. 7 funds, slightly complex.</div></div>
-    <div class="verdict-card winner"><div class="verdict-r">R4 · All in</div><div class="verdict-main" style="color:var(--accent)">★ Best risk-adjusted</div><div class="verdict-desc">Best Sharpe (0.84), safest floor (−14.2%). Most efficient allocation.</div></div>
+    <div class="verdict-card"><div class="verdict-r">R1</div><div class="verdict-main">Strong &amp; simple</div><div class="verdict-desc">6 funds. Excellent risk-return. Best for simplicity.</div></div>
+    <div class="verdict-card"><div class="verdict-r">R2</div><div class="verdict-main" style="color:var(--red)">Weakest overall</div><div class="verdict-desc">No gold or US hedge. Highest risk, lowest efficiency.</div></div>
+    <div class="verdict-card"><div class="verdict-r">R3</div><div class="verdict-main">Very good</div><div class="verdict-desc">Best crash protection. 7 funds, slightly more complex.</div></div>
+    <div class="verdict-card winner"><div class="verdict-r">R4</div><div class="verdict-main" style="color:var(--accent)">★ Best risk-adjusted</div><div class="verdict-desc">Best Sharpe (0.84), safest floor (−14.2%). Most diversified.</div></div>
   </div>
 </div>
 
-<!-- PLAIN ENGLISH PANEL -->
+<!-- PLAIN ENGLISH -->
 <div id="plain" class="panel">
-  <div class="sec-title">what do these numbers actually mean?</div>
+  <div class="sec-title">what do these numbers mean?</div>
   <div class="plain-card">
     <div class="plain-row">
       <div class="plain-icon">📈</div>
-      <div class="plain-content">
-        <div class="plain-title">Expected Return: 16–17% per year</div>
-        <div class="plain-desc">If you put ₹10,000 today and do nothing, in 10 years it becomes roughly <span class="highlight-num">₹47,000–₹50,000</span>. This is how fast your money grows each year, on average.</div>
-      </div>
+      <div><div class="plain-title">Return 16–17%/yr: how fast your money compounds</div>
+      <div class="plain-desc">₹10,000 put in today becomes roughly <span class="hn">₹47K–₹50K</span> in 10 years at this rate — without adding a single rupee more.</div></div>
     </div>
     <div class="plain-row">
       <div class="plain-icon">🎢</div>
-      <div class="plain-content">
-        <div class="plain-title">Volatility 12–16%: How bumpy is the ride?</div>
-        <div class="plain-desc">In any given year, your portfolio might go up <span class="highlight-num">+30%</span> or down <span class="highlight-num">−12%</span>. R4 (12.1%) is the smoothest ride; R2 (15.7%) is the bumpiest. Lower volatility = better sleep at night.</div>
-      </div>
+      <div><div class="plain-title">Volatility 12–16%: how bumpy the ride is</div>
+      <div class="plain-desc">In any given year, your portfolio might swing <span class="hn">+30% or −12%</span>. R4 (12.1%) is smoothest. R2 (15.7%) bumpiest. Lower = better sleep.</div></div>
     </div>
     <div class="plain-row">
       <div class="plain-icon">⚖️</div>
-      <div class="plain-content">
-        <div class="plain-title">Sharpe Ratio: bang for your risk buck</div>
-        <div class="plain-desc">R4's Sharpe of 0.84 vs R2's 0.62 means R4 gives you <span class="highlight-num">~35% more return</span> for every unit of risk you take. It's like getting more fuel per litre of petrol.</div>
-      </div>
+      <div><div class="plain-title">Sharpe ratio: return per unit of risk taken</div>
+      <div class="plain-desc">R4's 0.84 vs R2's 0.62 means R4 gives <span class="hn">~35% more return</span> for the same amount of risk. Better fuel economy for your money.</div></div>
     </div>
     <div class="plain-row">
       <div class="plain-icon">📉</div>
-      <div class="plain-content">
-        <div class="plain-title">Max Drawdown: worst-case crash scenario</div>
-        <div class="plain-desc">If markets crashed like 2020, R4's portfolio would drop at most <span class="highlight-num">−14.2%</span> from its peak. R2 could fall <span class="highlight-num">−20.7%</span>. Gold ETF is what buffers these crashes.</div>
-      </div>
-    </div>
-    <div class="plain-row">
-      <div class="plain-icon">🏆</div>
-      <div class="plain-content">
-        <div class="plain-title">Bottom line: R4 wins on every metric</div>
-        <div class="plain-desc">More funds = more diversification = smoother returns. R4 has the highest Sharpe, lowest volatility, smallest crash drop, and the best long-term wealth projection. The only downside: 9 funds to manage instead of 6.</div>
-      </div>
+      <div><div class="plain-title">Max drawdown: worst crash ever</div>
+      <div class="plain-desc">In a 2020-style crash, R4 would drop at most <span class="hn">−14.2%</span> from its peak before recovering. R2 could fall <span class="hn">−20.7%</span>. The gold ETF is what buffers this.</div></div>
     </div>
     <div class="plain-row">
       <div class="plain-icon">🔄</div>
-      <div class="plain-content">
-        <div class="plain-title">Step-Up SIP: the biggest wealth multiplier</div>
-        <div class="plain-desc">Increasing your SIP by just <span class="highlight-num">10% every year</span> can nearly <span class="highlight-num">double your final wealth</span> over 20 years compared to a flat SIP. See the Forecast tab to compare.</div>
-      </div>
+      <div><div class="plain-title">Step-Up SIP: the most underrated wealth hack</div>
+      <div class="plain-desc">Raising SIP by just <span class="hn">10%/year</span> (₹10K → ₹11K next year → ₹12.1K the year after…) nearly <span class="hn">doubles your wealth</span> over 20 years vs a flat SIP. See the Forecast tab.</div></div>
     </div>
-    <div class="plain-row" style="padding-bottom:0;border-bottom:none">
-      <div class="plain-icon">💰</div>
-      <div class="plain-content">
-        <div class="plain-title">CAGR vs Returns: what's the difference?</div>
-        <div class="plain-desc"><span class="highlight-num">CAGR</span> (Compound Annual Growth Rate) is the steady growth rate that would give you the same final result. Even if one year is +40% and next is −10%, CAGR smooths it to, say, 17%. It's the real measure of how fast wealth compounds.</div>
-      </div>
+    <div class="plain-row" style="border-bottom:none;padding-bottom:0">
+      <div class="plain-icon">📊</div>
+      <div><div class="plain-title">Why CAGR changes with holding period</div>
+      <div class="plain-desc">Year 1 CAGR can be anywhere from <span class="hn">−30% to +60%</span> — markets are unpredictable short-term. Over 10+ years, the noise averages out and CAGR converges toward the fund's <span class="hn">long-run mean (~17%)</span>. This is why SIP over long horizons is so powerful: you don't need to time the market.</div></div>
     </div>
   </div>
 
-  <div class="sec-title">returns at a glance (approximate CAGR)</div>
-  <div class="cagr-card">
+  <div class="sec-title">CAGR by holding period — all 4 portfolios</div>
+  <div class="cagr-wrap">
     <div class="cagr-head">
-      <div class="cagr-cell">Period</div>
-      <div class="cagr-cell">R1</div><div class="cagr-cell">R2</div><div class="cagr-cell">R3</div><div class="cagr-cell">R4</div>
+      <div class="cc">Period</div>
+      <div class="cc" id="ch-r1">R1</div><div class="cc" id="ch-r2">R2</div><div class="cc" id="ch-r3">R3</div><div class="cc" id="ch-r4">R4</div>
     </div>
-    <div class="cagr-row"><div class="cagr-val">1 year</div><div class="cagr-val">+12%</div><div class="cagr-val">+10%</div><div class="cagr-val">+13%</div><div class="cagr-val top">+13%</div></div>
-    <div class="cagr-row"><div class="cagr-val">3 years</div><div class="cagr-val">+16%</div><div class="cagr-val">+14%</div><div class="cagr-val">+16%</div><div class="cagr-val top">+17%</div></div>
-    <div class="cagr-row"><div class="cagr-val">5 years</div><div class="cagr-val">+17%</div><div class="cagr-val">+15%</div><div class="cagr-val">+17%</div><div class="cagr-val top">+17%</div></div>
-    <div class="cagr-row"><div class="cagr-val">10 years</div><div class="cagr-val">+17%</div><div class="cagr-val">+16%</div><div class="cagr-val">+17%</div><div class="cagr-val top">+17%</div></div>
-    <div class="cagr-row"><div class="cagr-val">15 years</div><div class="cagr-val">+17%</div><div class="cagr-val">+16%</div><div class="cagr-val">+17%</div><div class="cagr-val top">+17%</div></div>
+    <div class="cagr-row">
+      <div class="cv">1 Year<span class="csub">very noisy</span></div>
+      <div class="cv" id="cagr1r1">~12%<span class="csub">range: −15% to +42%</span></div>
+      <div class="cv" id="cagr1r2">~10%<span class="csub">range: −18% to +38%</span></div>
+      <div class="cv" id="cagr1r3">~12%<span class="csub">range: −14% to +40%</span></div>
+      <div class="cv top" id="cagr1r4">~13%<span class="csub">range: −13% to +41%</span></div>
+    </div>
+    <div class="cagr-row">
+      <div class="cv">3 Years<span class="csub">some noise</span></div>
+      <div class="cv" id="cagr3r1">~15%<span class="csub">range: +4% to +27%</span></div>
+      <div class="cv" id="cagr3r2">~13%<span class="csub">range: +1% to +25%</span></div>
+      <div class="cv" id="cagr3r3">~15%<span class="csub">range: +5% to +26%</span></div>
+      <div class="cv top" id="cagr3r4">~16%<span class="csub">range: +6% to +27%</span></div>
+    </div>
+    <div class="cagr-row">
+      <div class="cv">5 Years<span class="csub">moderating</span></div>
+      <div class="cv" id="cagr5r1">~16%<span class="csub">range: +9% to +24%</span></div>
+      <div class="cv" id="cagr5r2">~14%<span class="csub">range: +7% to +21%</span></div>
+      <div class="cv" id="cagr5r3">~16%<span class="csub">range: +9% to +23%</span></div>
+      <div class="cv top" id="cagr5r4">~16%<span class="csub">range: +10% to +23%</span></div>
+    </div>
+    <div class="cagr-row">
+      <div class="cv">10 Years<span class="csub">stabilising</span></div>
+      <div class="cv" id="cagr10r1">~17%<span class="csub">range: +13% to +21%</span></div>
+      <div class="cv" id="cagr10r2">~15%<span class="csub">range: +11% to +19%</span></div>
+      <div class="cv" id="cagr10r3">~17%<span class="csub">range: +13% to +21%</span></div>
+      <div class="cv top" id="cagr10r4">~17%<span class="csub">range: +14% to +20%</span></div>
+    </div>
+    <div class="cagr-row">
+      <div class="cv">15 Years<span class="csub">reliable</span></div>
+      <div class="cv">~17%</div><div class="cv">~16%</div><div class="cv">~17%</div><div class="cv top">~17%</div>
+    </div>
+    <div class="cagr-row">
+      <div class="cv">20 Years<span class="csub">long-run avg</span></div>
+      <div class="cv">~17%</div><div class="cv">~16%</div><div class="cv">~17%</div><div class="cv top">~17%</div>
+    </div>
+    <div class="cagr-note">
+      <b>How to read the range:</b> The range (e.g. "−15% to +42%" for Year 1) shows roughly one standard deviation of possible outcomes based on historical equity volatility. Short-term returns are dominated by market mood — not fundamentals. By year 10+, the noise averages out and CAGR converges to the fund's long-run target. This is why a 15-20 year SIP is so powerful: you don't need to predict the market.
+    </div>
   </div>
-  <div class="note">1-year estimate includes short-term noise; longer-period estimates converge to the fund's long-run CAGR target. Past performance does not guarantee future results.</div>
 </div>
 
-<!-- FORECAST PANEL -->
+<!-- FORECAST -->
 <div id="forecast" class="panel">
-  <div class="sec-title">projected wealth · R4 (best portfolio)</div>
-
-  <div class="forecast-card" id="fc-main">
-    <div class="forecast-head">
-      <div>
-        <div class="forecast-title" id="fc-title">SIP: ₹10,000/mo + 10% annual step-up</div>
-        <div class="forecast-sub" id="fc-sub">Based on 16.6% expected CAGR</div>
-      </div>
-    </div>
-    <div class="forecast-body">
-      <div class="f-row"><span class="f-label">10 years · invested <span id="inv10">₹15.9L</span></span><span class="f-val accent" id="fw10">₹44.2L</span></div>
-      <div class="f-row"><span class="f-label">15 years · invested <span id="inv15">₹31.9L</span></span><span class="f-val accent" id="fw15">₹1.24 Cr</span></div>
-      <div class="f-row"><span class="f-label">20 years · invested <span id="inv20">₹57.3L</span></span><span class="f-val accent" id="fw20">₹3.06 Cr</span></div>
-      <div class="f-row"><span class="f-label">25 years · invested <span id="inv25">₹98.3L</span></span><span class="f-val accent" id="fw25">₹7.11 Cr</span></div>
-      <div class="f-row" style="border-bottom:none"><span class="f-label">30 years · invested <span id="inv30">₹1.65 Cr</span></span><span class="f-val accent" id="fw30">₹16.4 Cr</span></div>
-    </div>
+  <div class="sel-banner">
+    <span class="sel-banner-l">Forecast for</span>
+    <span class="sel-banner-r" id="fc-sel-lbl">R4 · All in</span>
   </div>
-
-  <div class="sec-title">flat vs step-up comparison (R4)</div>
+  <div class="r-selector">
+    <button class="r-btn" id="fc-r1" onclick="selectR('r1');show('forecast',document.querySelector('.tab:nth-child(3)'))">R1</button>
+    <button class="r-btn" id="fc-r2" onclick="selectR('r2');show('forecast',document.querySelector('.tab:nth-child(3)'))">R2</button>
+    <button class="r-btn" id="fc-r3" onclick="selectR('r3');show('forecast',document.querySelector('.tab:nth-child(3)'))">R3</button>
+    <button class="r-btn active" id="fc-r4" onclick="selectR('r4');show('forecast',document.querySelector('.tab:nth-child(3)'))">R4 ★</button>
+  </div>
   <div class="forecast-card">
     <div class="forecast-head">
-      <div class="forecast-title">20-year wealth difference</div>
+      <div class="forecast-title" id="fc-title">—</div>
+      <div class="forecast-sub" id="fc-sub">—</div>
     </div>
     <div class="forecast-body">
-      <div class="f-row"><span class="f-label">Flat SIP (no increase)</span><span class="f-val" id="flat20">₹1.72 Cr</span></div>
-      <div class="f-row"><span class="f-label">10% annual step-up</span><span class="f-val accent" id="stepup20">₹3.06 Cr</span></div>
-      <div class="f-row" style="border-bottom:none"><span class="f-label">Extra wealth from step-up</span><span class="f-val accent" id="delta20">+₹1.34 Cr</span></div>
-      <div class="growth-bar"><div class="growth-fill" id="stepup-bar" style="width:64%"></div></div>
-      <div style="font-size:10px;color:var(--txt3);margin-top:6px" id="stepup-pct">Step-up generates 78% more wealth than flat SIP</div>
+      <div class="f-row"><span class="f-label">10 years · invested <span id="inv10" class="hn">—</span></span><div class="f-right"><span class="f-val accent" id="fw10">—</span><span class="f-mult" id="fm10"></span></div></div>
+      <div class="f-row"><span class="f-label">15 years · invested <span id="inv15" class="hn">—</span></span><div class="f-right"><span class="f-val accent" id="fw15">—</span><span class="f-mult" id="fm15"></span></div></div>
+      <div class="f-row"><span class="f-label">20 years · invested <span id="inv20" class="hn">—</span></span><div class="f-right"><span class="f-val accent" id="fw20">—</span><span class="f-mult" id="fm20"></span></div></div>
+      <div class="f-row"><span class="f-label">25 years · invested <span id="inv25" class="hn">—</span></span><div class="f-right"><span class="f-val accent" id="fw25">—</span><span class="f-mult" id="fm25"></span></div></div>
+      <div class="f-row"><span class="f-label">30 years · invested <span id="inv30" class="hn">—</span></span><div class="f-right"><span class="f-val accent" id="fw30">—</span><span class="f-mult" id="fm30"></span></div></div>
     </div>
   </div>
-
-  <div class="sec-title">milestones</div>
-  <div class="milestone-grid" id="milestones">
-    <div class="milestone"><div class="ms-label">Reach ₹50 Lakh</div><div class="ms-val" id="ms50">~13 yrs</div><div class="ms-sub" id="ms50-sub">with step-up</div></div>
-    <div class="milestone"><div class="ms-label">Reach ₹1 Crore</div><div class="ms-val" id="ms1cr">~16 yrs</div><div class="ms-sub" id="ms1cr-sub">with step-up</div></div>
-    <div class="milestone"><div class="ms-label">Reach ₹2 Crore</div><div class="ms-val" id="ms2cr">~20 yrs</div><div class="ms-sub" id="ms2cr-sub">with step-up</div></div>
-    <div class="milestone"><div class="ms-label">Reach ₹5 Crore</div><div class="ms-val" id="ms5cr">~25 yrs</div><div class="ms-sub" id="ms5cr-sub">with step-up</div></div>
+  <div class="sec-title">flat vs step-up · <span id="fc-su-lbl">R4</span></div>
+  <div class="forecast-card">
+    <div class="forecast-body">
+      <div class="f-row"><span class="f-label">Flat SIP · 20yr</span><span class="f-val" id="flat20">—</span></div>
+      <div class="f-row"><span class="f-label"><span id="su-pct-lbl">10%</span> step-up · 20yr</span><span class="f-val accent" id="stepup20">—</span></div>
+      <div class="f-row"><span class="f-label">Extra wealth from step-up</span><span class="f-val accent" id="delta20">—</span></div>
+      <div class="growth-bar"><div class="growth-fill" id="stepup-bar" style="width:60%"></div></div>
+      <div style="font-size:10px;color:var(--txt3);margin-top:6px" id="stepup-pct">—</div>
+    </div>
   </div>
-
-  <div class="sec-title" style="margin-top:12px">all 4 portfolios · 15-yr projection</div>
+  <div class="sec-title">milestones · <span id="fc-ms-lbl">R4</span></div>
+  <div class="milestone-grid">
+    <div class="milestone"><div class="ms-label">Reach ₹50 Lakh</div><div class="ms-val" id="ms50">—</div><div class="ms-sub" id="ms50s">—</div></div>
+    <div class="milestone"><div class="ms-label">Reach ₹1 Crore</div><div class="ms-val" id="ms1cr">—</div><div class="ms-sub" id="ms1crs">—</div></div>
+    <div class="milestone"><div class="ms-label">Reach ₹2 Crore</div><div class="ms-val" id="ms2cr">—</div><div class="ms-sub" id="ms2crs">—</div></div>
+    <div class="milestone"><div class="ms-label">Reach ₹5 Crore</div><div class="ms-val" id="ms5cr">—</div><div class="ms-sub" id="ms5crs">—</div></div>
+  </div>
+  <div class="sec-title" style="margin-top:12px">all 4 portfolios · 15-yr comparison</div>
   <div class="forecast-card">
     <div class="forecast-body" style="padding-top:8px">
-      <div class="f-row"><span class="f-label">R1 (Replaced)</span><span class="f-val" id="f15r1">₹67.0L</span></div>
-      <div class="f-row"><span class="f-label">R2 (Baseline)</span><span class="f-val bad" id="f15r2">₹61.6L</span></div>
-      <div class="f-row"><span class="f-label">R3 (Combined)</span><span class="f-val" id="f15r3">₹65.5L</span></div>
-      <div class="f-row" style="border-bottom:none"><span class="f-label">R4 (All in) ★</span><span class="f-val accent" id="f15r4">₹66.1L</span></div>
+      <div class="f-row"><span class="f-label">R1 (Replaced)</span><div class="f-right"><span class="f-val" id="f15r1">—</span><span class="f-mult" id="f15r1x"></span></div></div>
+      <div class="f-row"><span class="f-label">R2 (Baseline)</span><div class="f-right"><span class="f-val bad" id="f15r2">—</span><span class="f-mult" id="f15r2x"></span></div></div>
+      <div class="f-row"><span class="f-label">R3 (Combined)</span><div class="f-right"><span class="f-val" id="f15r3">—</span><span class="f-mult" id="f15r3x"></span></div></div>
+      <div class="f-row" style="border-bottom:none"><span class="f-label">R4 (All in) ★</span><div class="f-right"><span class="f-val accent" id="f15r4">—</span><span class="f-mult" id="f15r4x"></span></div></div>
     </div>
   </div>
-  <div class="note">Step-up projections assume SIP increases at the start of each year. Actual compounding of step-up can significantly boost terminal wealth. Probability of loss at 20 years: 0.00% for all portfolios.</div>
+  <div class="note">Step-up projections: SIP increases at start of each year. Probability of loss at 20yr is ~0% for all portfolios at these CAGR levels. Past performance ≠ future results.</div>
 </div>
 
-<!-- CHART PANEL -->
+<!-- CHART -->
 <div id="chart" class="panel">
-  <div class="sec-title">wealth growth over time</div>
-
+  <div class="sel-banner">
+    <span class="sel-banner-l">Charting</span>
+    <span class="sel-banner-r" id="ch-sel-lbl">R4 · All in</span>
+  </div>
+  <div class="r-selector">
+    <button class="r-btn" id="ch-r1" onclick="selectR('r1');show('chart',document.querySelector('.tab:nth-child(4)'))">R1</button>
+    <button class="r-btn" id="ch-r2" onclick="selectR('r2');show('chart',document.querySelector('.tab:nth-child(4)'))">R2</button>
+    <button class="r-btn" id="ch-r3" onclick="selectR('r3');show('chart',document.querySelector('.tab:nth-child(4)'))">R3</button>
+    <button class="r-btn active" id="ch-r4" onclick="selectR('r4');show('chart',document.querySelector('.tab:nth-child(4)'))">R4 ★</button>
+  </div>
   <div class="chart-wrap">
-    <div class="chart-head">
-      <span class="chart-title" id="chart-main-title">Projected wealth · R4</span>
-    </div>
-    <div class="chart-tabs" style="padding-bottom:8px">
+    <div class="chart-head"><span class="chart-title" id="chart-main-title">Wealth growth</span></div>
+    <div class="chart-tabs">
       <button class="ctab active" onclick="switchChartView('flat')">Flat SIP</button>
       <button class="ctab" onclick="switchChartView('stepup')">With Step-Up</button>
       <button class="ctab" onclick="switchChartView('compare')">All 4</button>
@@ -482,415 +475,287 @@ canvas{display:block;width:100%!important}
     <canvas id="mainChart" height="220" style="padding:0 14px 14px"></canvas>
     <div class="chart-legend" style="padding:0 14px 14px" id="mainLegend"></div>
   </div>
-
-  <div class="sec-title">estimated CAGR by holding period</div>
   <div class="chart-wrap">
-    <div class="chart-head" style="padding-bottom:8px">
-      <span class="chart-title">Expected CAGR vs holding period</span>
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#4cd9a0"></div>R4</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#74b3f5"></div>R1</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#f07070"></div>R2</div>
-      </div>
+    <div class="chart-head">
+      <span class="chart-title">CAGR by holding period — how returns stabilise</span>
+      <div class="chart-legend" id="cagrLegend"></div>
     </div>
-    <canvas id="cagrChart" height="180" style="padding:0 14px 14px"></canvas>
+    <canvas id="cagrChart" height="200" style="padding:8px 14px 14px"></canvas>
+    <div class="cagr-note" style="margin:0;border-radius:0;border-top:0.5px solid var(--bdr)">The shaded band shows ±1 standard deviation of possible outcomes for the selected portfolio. It narrows dramatically over time — by year 15, outcomes are much more predictable.</div>
   </div>
-
-  <div class="sec-title">invested vs wealth (flat SIP)</div>
   <div class="chart-wrap">
-    <div class="chart-head" style="padding-bottom:8px">
-      <span class="chart-title">How your money grows vs what you put in · R4</span>
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#4cd9a0"></div>Wealth</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#252521;border:1px solid #6b6863"></div>Invested</div>
-      </div>
+    <div class="chart-head">
+      <span class="chart-title" id="inv-chart-title">Invested vs wealth · R4</span>
+      <div class="chart-legend"><div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Wealth</div><div class="legend-item"><div class="legend-dot" style="background:#6b6863"></div>Invested</div></div>
     </div>
     <canvas id="investedChart" height="180" style="padding:0 14px 14px"></canvas>
   </div>
 </div>
 
-<!-- R1 FUNDS -->
-<div id="r1" class="panel">
-  <div class="sec-title">report 1 — replaced · 6 funds · Sharpe 0.80</div>
-  <div id="r1-funds"></div>
-</div>
-<div id="r2" class="panel">
-  <div class="sec-title">report 2 — baseline equal · 6 funds · Sharpe 0.62</div>
-  <div class="note" style="margin-bottom:10px">No gold ETF, no US exposure. Equal weights. Weakest risk-adjusted performance.</div>
-  <div id="r2-funds"></div>
-</div>
-<div id="r3" class="panel">
-  <div class="sec-title">report 3 — baseline + replaced · 7 funds · Sharpe 0.82</div>
-  <div id="r3-funds"></div>
-</div>
-<div id="r4" class="panel">
-  <div class="sec-title">report 4 — all in · 9 funds · Sharpe 0.84 ★</div>
-  <div id="r4-funds"></div>
+<!-- FUNDS -->
+<div id="funds" class="panel">
+  <div class="sel-banner">
+    <span class="sel-banner-l">Fund list for</span>
+    <span class="sel-banner-r" id="fn-sel-lbl">R4 · All in</span>
+  </div>
+  <div class="r-selector">
+    <button class="r-btn" id="fn-r1" onclick="selectR('r1');show('funds',document.querySelector('.tab:nth-child(5)'))">R1 · 6 funds</button>
+    <button class="r-btn" id="fn-r2" onclick="selectR('r2');show('funds',document.querySelector('.tab:nth-child(5)'))">R2 · 6 funds</button>
+    <button class="r-btn" id="fn-r3" onclick="selectR('r3');show('funds',document.querySelector('.tab:nth-child(5)'))">R3 · 7 funds</button>
+    <button class="r-btn active" id="fn-r4" onclick="selectR('r4');show('funds',document.querySelector('.tab:nth-child(5)'))">R4 · 9 funds ★</button>
+  </div>
+  <div id="funds-list"></div>
 </div>
 
-<p class="disclaimer">For research &amp; educational purposes only · Not financial advice · Consult a SEBI-registered investment adviser before investing</p>
+<p class="disclaimer">For research &amp; educational purposes only · Not financial advice · Consult a SEBI-registered adviser before investing</p>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────
-const CAGR = { r1: 0.168, r2: 0.162, r3: 0.167, r4: 0.166 };
-const BASE_PROJ_FLAT = {
-  r1: { y10: 2960000, y15: 6700850, y20: 17465337 },
-  r2: { y10: 2710000, y15: 6162855, y20: 15147329 },
-  r3: { y10: 2850000, y15: 6554849, y20: 17172553 },
-  r4: { y10: 2955600, y15: 6610914, y20: 17233995 }
+const RINFO={
+  r1:{label:'R1 · Replaced',cagr:.168,sharpe:.80,vol:.129,mdd:-.191,nfunds:6},
+  r2:{label:'R2 · Baseline',cagr:.162,sharpe:.62,vol:.157,mdd:-.207,nfunds:6},
+  r3:{label:'R3 · Combined',cagr:.167,sharpe:.82,vol:.124,mdd:-.152,nfunds:7},
+  r4:{label:'R4 · All in',cagr:.166,sharpe:.84,vol:.121,mdd:-.142,nfunds:9}
 };
-const FUNDS = {
-  r1: [
-    { name:"Kotak Contra Fund — Direct Plan Growth", code:"119769", isin:"INF174K01KZ9", role:"core", w:0.4000 },
-    { name:"Nippon India Growth Mid Cap Fund — Direct", code:"118668", isin:"INF204K01E54", role:"core", w:0.1954 },
-    { name:"Motilal Oswal S&P 500 Index Fund — Direct", code:"148381", isin:"INF247L01AG2", role:"satellite", w:0.1500 },
-    { name:"Tata Gold Exchange Traded Fund", code:"151778", isin:"INF277K01ON6", role:"hedge", w:0.1000 },
-    { name:"HDFC Focused Fund — Growth Option Direct", code:"118950", isin:"INF179K01VK7", role:"core", w:0.0988 },
-    { name:"Nippon India Small Cap Fund — Direct", code:"118778", isin:"INF204K01K15", role:"satellite", w:0.0557 },
+const RCOLORS={r1:'#74b3f5',r2:'#f07070',r3:'#f5b944',r4:'#4cd9a0'};
+const FUNDS={
+  r1:[
+    {name:'Kotak Contra Fund — Direct Plan Growth',code:'119769',isin:'INF174K01KZ9',role:'core',w:.4000},
+    {name:'Nippon India Growth Mid Cap Fund — Direct',code:'118668',isin:'INF204K01E54',role:'core',w:.1954},
+    {name:'Motilal Oswal S&P 500 Index Fund — Direct',code:'148381',isin:'INF247L01AG2',role:'satellite',w:.1500},
+    {name:'Tata Gold Exchange Traded Fund',code:'151778',isin:'INF277K01ON6',role:'hedge',w:.1000},
+    {name:'HDFC Focused Fund — Growth Option Direct',code:'118950',isin:'INF179K01VK7',role:'core',w:.0988},
+    {name:'Nippon India Small Cap Fund — Direct',code:'118778',isin:'INF204K01K15',role:'satellite',w:.0557},
   ],
-  r2: [
-    { name:"Motilal Oswal Midcap Fund — Direct Plan Growth", code:"127042", isin:"INF247L01445", role:"core", w:0.1903 },
-    { name:"SBI Contra Fund — Direct Plan Growth", code:"119835", isin:"INF200K01RA0", role:"core", w:0.1697 },
-    { name:"HDFC Focused Fund — Growth Option Direct", code:"118950", isin:"INF179K01VK7", role:"core", w:0.1600 },
-    { name:"Bandhan Small Cap Fund — Direct Plan Growth", code:"147946", isin:"INF194KB1AL4", role:"satellite", w:0.1600 },
-    { name:"ICICI Prudential Large & Mid Cap Fund — Direct", code:"120596", isin:"INF109K011O5", role:"satellite", w:0.1600 },
-    { name:"Nippon India Large Cap Fund — Direct Plan Growth", code:"118632", isin:"INF204K01XI3", role:"satellite", w:0.1600 },
+  r2:[
+    {name:'Motilal Oswal Midcap Fund — Direct Plan Growth',code:'127042',isin:'INF247L01445',role:'core',w:.1903},
+    {name:'SBI Contra Fund — Direct Plan Growth',code:'119835',isin:'INF200K01RA0',role:'core',w:.1697},
+    {name:'HDFC Focused Fund — Growth Option Direct',code:'118950',isin:'INF179K01VK7',role:'core',w:.1600},
+    {name:'Bandhan Small Cap Fund — Direct Plan Growth',code:'147946',isin:'INF194KB1AL4',role:'satellite',w:.1600},
+    {name:'ICICI Prudential Large & Mid Cap Fund — Direct',code:'120596',isin:'INF109K011O5',role:'satellite',w:.1600},
+    {name:'Nippon India Large Cap Fund — Direct Plan Growth',code:'118632',isin:'INF204K01XI3',role:'satellite',w:.1600},
   ],
-  r3: [
-    { name:"Kotak Contra Fund — Direct Plan Growth", code:"119769", isin:"INF174K01KZ9", role:"core", w:0.4000 },
-    { name:"SBI Small Cap Fund — Direct Plan Growth", code:"125497", isin:"INF200K01T51", role:"core", w:0.1633 },
-    { name:"Motilal Oswal S&P 500 Index Fund — Direct", code:"148381", isin:"INF247L01AG2", role:"satellite", w:0.1500 },
-    { name:"Tata Gold Exchange Traded Fund", code:"151778", isin:"INF277K01ON6", role:"hedge", w:0.1000 },
-    { name:"Nippon India Growth Mid Cap Fund — Direct", code:"118668", isin:"INF204K01E54", role:"core", w:0.0866 },
-    { name:"HDFC Focused Fund — Growth Option Direct", code:"118950", isin:"INF179K01VK7", role:"core", w:0.0644 },
-    { name:"ICICI Prudential MidCap Fund — Direct", code:"120381", isin:"INF109K011N7", role:"core", w:0.0357 },
+  r3:[
+    {name:'Kotak Contra Fund — Direct Plan Growth',code:'119769',isin:'INF174K01KZ9',role:'core',w:.4000},
+    {name:'SBI Small Cap Fund — Direct Plan Growth',code:'125497',isin:'INF200K01T51',role:'core',w:.1633},
+    {name:'Motilal Oswal S&P 500 Index Fund — Direct',code:'148381',isin:'INF247L01AG2',role:'satellite',w:.1500},
+    {name:'Tata Gold Exchange Traded Fund',code:'151778',isin:'INF277K01ON6',role:'hedge',w:.1000},
+    {name:'Nippon India Growth Mid Cap Fund — Direct',code:'118668',isin:'INF204K01E54',role:'core',w:.0866},
+    {name:'HDFC Focused Fund — Growth Option Direct',code:'118950',isin:'INF179K01VK7',role:'core',w:.0644},
+    {name:'ICICI Prudential MidCap Fund — Direct',code:'120381',isin:'INF109K011N7',role:'core',w:.0357},
   ],
-  r4: [
-    { name:"Kotak Contra Fund — Direct Plan Growth", code:"119769", isin:"INF174K01KZ9", role:"core", w:0.4000 },
-    { name:"Motilal Oswal S&P 500 Index Fund — Direct", code:"148381", isin:"INF247L01AG2", role:"satellite", w:0.1500 },
-    { name:"Tata Gold Exchange Traded Fund", code:"151778", isin:"INF277K01ON6", role:"hedge", w:0.1000 },
-    { name:"Nippon India Growth Mid Cap Fund — Direct", code:"118668", isin:"INF204K01E54", role:"core", w:0.1057 },
-    { name:"SBI Small Cap Fund — Direct Plan Growth", code:"125497", isin:"INF200K01T51", role:"core", w:0.0893 },
-    { name:"Motilal Oswal Midcap Fund — Direct Plan Growth", code:"127042", isin:"INF247L01445", role:"core", w:0.0565 },
-    { name:"ICICI Prudential MidCap Fund — Direct", code:"120381", isin:"INF109K011N7", role:"core", w:0.0438 },
-    { name:"SBI Contra Fund — Direct Plan Growth", code:"119835", isin:"INF200K01RA0", role:"core", w:0.0332 },
-    { name:"HDFC Focused Fund — Growth Option Direct", code:"118950", isin:"INF179K01VK7", role:"core", w:0.0215 },
+  r4:[
+    {name:'Kotak Contra Fund — Direct Plan Growth',code:'119769',isin:'INF174K01KZ9',role:'core',w:.4000},
+    {name:'Motilal Oswal S&P 500 Index Fund — Direct',code:'148381',isin:'INF247L01AG2',role:'satellite',w:.1500},
+    {name:'Tata Gold Exchange Traded Fund',code:'151778',isin:'INF277K01ON6',role:'hedge',w:.1000},
+    {name:'Nippon India Growth Mid Cap Fund — Direct',code:'118668',isin:'INF204K01E54',role:'core',w:.1057},
+    {name:'SBI Small Cap Fund — Direct Plan Growth',code:'125497',isin:'INF200K01T51',role:'core',w:.0893},
+    {name:'Motilal Oswal Midcap Fund — Direct Plan Growth',code:'127042',isin:'INF247L01445',role:'core',w:.0565},
+    {name:'ICICI Prudential MidCap Fund — Direct',code:'120381',isin:'INF109K011N7',role:'core',w:.0438},
+    {name:'SBI Contra Fund — Direct Plan Growth',code:'119835',isin:'INF200K01RA0',role:'core',w:.0332},
+    {name:'HDFC Focused Fund — Growth Option Direct',code:'118950',isin:'INF179K01VK7',role:'core',w:.0215},
   ]
 };
+let sip=10000,stepupPct=10,stepupOn=true,chartView='flat',selR='r4';
+let mainChart=null,cagrChart=null,investedChart=null;
 
-// ── STATE ─────────────────────────────────────────────────────────────
-let sip = 10000, stepupPct = 10, stepupOn = true, chartView = 'flat';
+function fmt(n){if(n>=10000000)return'₹'+(n/10000000).toFixed(2)+' Cr';if(n>=100000)return'₹'+(n/100000).toFixed(1)+'L';return'₹'+Math.round(n).toLocaleString('en-IN');}
+function fmtS(n){if(n>=10000000)return(n/10000000).toFixed(1)+'Cr';if(n>=100000)return(n/100000).toFixed(0)+'L';if(n>=1000)return Math.round(n/1000)+'K';return Math.round(n);}
+function sipW(m,y,c,su=0){const mr=Math.pow(1+c,1/12)-1;let w=0,cur=m;for(let i=0;i<y;i++){for(let j=0;j<12;j++)w=(w+cur)*(1+mr);if(su>0)cur*=(1+su/100);}return w;}
+function totInv(m,y,su=0){let t=0,cur=m;for(let i=0;i<y;i++){t+=cur*12;if(su>0)cur*=(1+su/100);}return t;}
+function yrsTo(m,c,tgt,su){const mr=Math.pow(1+c,1/12)-1;let w=0,cur=m;for(let y=1;y<=50;y++){for(let j=0;j<12;j++)w=(w+cur)*(1+mr);if(su>0)cur*=(1+su/100);if(w>=tgt)return y;}return null;}
 
-// ── HELPERS ───────────────────────────────────────────────────────────
-function fmt(n) {
-  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
-  if (n >= 100000)   return '₹' + (n/100000).toFixed(1) + 'L';
-  return '₹' + Math.round(n).toLocaleString('en-IN');
-}
-function fmtShort(n) {
-  if (n >= 10000000) return (n/10000000).toFixed(1)+'Cr';
-  if (n >= 100000)   return (n/100000).toFixed(0)+'L';
-  return Math.round(n/1000)+'K';
-}
-
-// Simulate SIP wealth with optional step-up
-function sipWealth(monthlySIP, years, cagr, stepupPctAnnual = 0) {
-  const monthlyRate = Math.pow(1 + cagr, 1/12) - 1;
-  let wealth = 0, currentSIP = monthlySIP;
-  for (let y = 0; y < years; y++) {
-    for (let m = 0; m < 12; m++) {
-      wealth = (wealth + currentSIP) * (1 + monthlyRate);
-    }
-    if (stepupPctAnnual > 0) currentSIP *= (1 + stepupPctAnnual / 100);
-  }
-  return wealth;
-}
-function totalInvested(monthlySIP, years, stepupPctAnnual = 0) {
-  let total = 0, cur = monthlySIP;
-  for (let y = 0; y < years; y++) {
-    total += cur * 12;
-    if (stepupPctAnnual > 0) cur *= (1 + stepupPctAnnual / 100);
-  }
-  return total;
-}
-function yearsToTarget(monthlySIP, cagr, target, stepupPctAnnual) {
-  const monthlyRate = Math.pow(1+cagr,1/12)-1;
-  let w=0, cur=monthlySIP;
-  for(let y=1;y<=50;y++){
-    for(let m=0;m<12;m++) w=(w+cur)*(1+monthlyRate);
-    if(stepupPctAnnual>0) cur*=(1+stepupPctAnnual/100);
-    if(w>=target) return y;
-  }
-  return null;
+function selectR(r){
+  selR=r;
+  document.querySelectorAll('.kpi').forEach(el=>el.classList.remove('sel-r'));
+  document.getElementById('kpi-'+r).classList.add('sel-r');
+  ['r1','r2','r3','r4'].forEach(x=>{
+    ['fc','ch','fn'].forEach(p=>{const b=document.getElementById(p+'-'+x);if(b)b.classList.toggle('active',x===r);});
+  });
+  const lbl=RINFO[r].label;
+  ['fc-sel-lbl','ch-sel-lbl','fn-sel-lbl'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=lbl;});
+  ['fc-su-lbl','fc-ms-lbl'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=r.toUpperCase();});
+  // highlight selected col in compare
+  document.querySelectorAll('.mc.hl-sel').forEach(el=>el.classList.remove('hl-sel'));
+  const mc=document.getElementById('mc-ret-'+r);if(mc)mc.classList.add('hl-sel');
+  updateForecast();renderFunds();renderCharts();
 }
 
-// ── RENDER FUNDS ──────────────────────────────────────────────────────
-function renderFunds() {
-  ['r1','r2','r3','r4'].forEach(r => {
-    const el = document.getElementById(r+'-funds');
-    el.innerHTML = FUNDS[r].map(f => {
-      const sipAmt = Math.round(sip * f.w);
-      return `<div class="fund-card">
-        <div class="fund-header">
-          <div class="fund-name">${f.name}</div>
-          <div class="fund-tags"><span class="tag tag-${f.role}">${f.role.charAt(0).toUpperCase()+f.role.slice(1)}</span></div>
-        </div>
-        <div class="fund-body">
-          <div class="fund-meta">
-            <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="${f.w>=0.35?'color:var(--accent)':''}">${(f.w*100).toFixed(1)}%</div></div>
-            <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-fund-${r}" data-weight="${f.w}">₹${sipAmt.toLocaleString('en-IN')}</div></div>
-          </div>
-          <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:${f.w*250}%"></div></div><div class="pct-label">${(f.w*100).toFixed(1)}%</div></div>
-          <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">${f.code}</span></div>
-          <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">${f.isin}</span></div>
-        </div>
-      </div>`;
-    }).join('');
+function updateAll(val){
+  if(val!==undefined)sip=Math.max(500,parseInt(val)||500);
+  stepupPct=Math.max(0,Math.min(50,parseInt(document.getElementById('stepup-input').value)||0));
+  document.getElementById('sip-input').value=sip;
+  document.getElementById('header-sip').textContent='₹'+sip.toLocaleString('en-IN');
+  updateCompare();updateForecast();renderFunds();renderCharts();
+}
+
+function updateCompare(){
+  const su=stepupOn?stepupPct:0;
+  ['r1','r2','r3','r4'].forEach(r=>{
+    const m15=sipW(sip,15,RINFO[r].cagr,su),m20=sipW(sip,20,RINFO[r].cagr,su);
+    const i15=totInv(sip,15,su),i20=totInv(sip,20,su);
+    document.getElementById('cmp15'+r).textContent=fmt(m15);
+    document.getElementById('cmp15'+r+'x').textContent=(m15/i15).toFixed(1)+'× invested';
+    document.getElementById('cmp20'+r).textContent=fmt(m20);
+    document.getElementById('cmp20'+r+'x').textContent=(m20/i20).toFixed(1)+'× invested';
+  });
+  const lbl=su>0?`${su}% step-up`:'flat SIP';
+  document.getElementById('proj15-lbl').textContent=lbl;
+  document.getElementById('proj20-lbl').textContent=lbl;
+}
+
+function updateForecast(){
+  const r=selR,info=RINFO[r],su=stepupOn?stepupPct:0,c=info.cagr;
+  document.getElementById('fc-title').textContent=su>0?`₹${sip.toLocaleString('en-IN')}/mo + ${su}% step-up`:`₹${sip.toLocaleString('en-IN')}/mo flat`;
+  document.getElementById('fc-sub').textContent=`${r.toUpperCase()} · ${(c*100).toFixed(1)}% CAGR · Sharpe ${info.sharpe}`;
+  [10,15,20,25,30].forEach(y=>{
+    const w=sipW(sip,y,c,su),inv=totInv(sip,y,su);
+    document.getElementById('fw'+y).textContent=fmt(w);
+    document.getElementById('inv'+y).textContent=fmt(inv);
+    document.getElementById('fm'+y).textContent=(w/inv).toFixed(1)+'×';
+  });
+  const flat20=sipW(sip,20,c,0),su20=sipW(sip,20,c,su);
+  document.getElementById('flat20').textContent=fmt(flat20);
+  document.getElementById('stepup20').textContent=fmt(su20);
+  document.getElementById('delta20').textContent=su>0?'+'+fmt(su20-flat20):'same (step-up is off)';
+  const pct=su>0?Math.round((su20/flat20-1)*100):0;
+  document.getElementById('stepup-bar').style.width=Math.min(88,Math.max(4,pct/2))+'%';
+  document.getElementById('stepup-pct').textContent=su>0?`${r.toUpperCase()} step-up generates ${pct}% more wealth vs flat SIP`:'Toggle step-up ON to compare';
+  document.getElementById('su-pct-lbl').textContent=su+'%';
+  [['ms50',5e6],['ms1cr',1e7],['ms2cr',2e7],['ms5cr',5e7]].forEach(([id,tgt])=>{
+    const y=yrsTo(sip,c,tgt,su);
+    document.getElementById(id).textContent=y?'~'+y+' yrs':'30+ yrs';
+    document.getElementById(id+'s').textContent=su>0?`with ${su}% step-up`:`flat · ${r.toUpperCase()}`;
+  });
+  ['r1','r2','r3','r4'].forEach(x=>{
+    const w=sipW(sip,15,RINFO[x].cagr,su),inv=totInv(sip,15,su);
+    document.getElementById('f15'+x).textContent=fmt(w);
+    document.getElementById('f15'+x+'x').textContent=(w/inv).toFixed(1)+'×';
   });
 }
 
-// ── UPDATE ALL ────────────────────────────────────────────────────────
-function updateAll(val) {
-  if (val !== undefined) sip = Math.max(500, parseInt(val) || 500);
-  stepupPct = Math.max(0, Math.min(50, parseInt(document.getElementById('stepup-input').value) || 0));
-  const su = stepupOn ? stepupPct : 0;
+function renderFunds(){
+  const el=document.getElementById('funds-list');if(!el)return;
+  el.innerHTML=FUNDS[selR].map(f=>`<div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">${f.name}</div>
+      <div class="fund-tags"><span class="tag tag-${f.role}">${f.role.charAt(0).toUpperCase()+f.role.slice(1)}</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="${f.w>=.35?'color:var(--accent)':''}">${(f.w*100).toFixed(1)}%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹${Math.round(sip*f.w).toLocaleString('en-IN')}</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:${f.w*250}%"></div></div><div class="pct-label">${(f.w*100).toFixed(1)}%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">${f.code}</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">${f.isin}</span></div>
+    </div>
+  </div>`).join('');
+}
 
-  document.getElementById('sip-input').value = sip;
-  document.getElementById('header-sip').textContent = '₹' + sip.toLocaleString('en-IN');
-
-  // Projections for compare tab (flat)
-  const ratio = sip / 10000;
-  ['r1','r2','r3','r4'].forEach(r => {
-    const p = BASE_PROJ_FLAT[r];
-    const inv15 = sip * 180, inv20 = sip * 240;
-    const m15f = Math.round(p.y15 * ratio), m20f = Math.round(p.y20 * ratio);
-    document.getElementById(`cmp-15${r}`).textContent = fmt(m15f);
-    document.getElementById(`cmp-15${r}-x`).textContent = (m15f/inv15).toFixed(1) + '×';
-    document.getElementById(`cmp-20${r}`).textContent = fmt(m20f);
-    document.getElementById(`cmp-20${r}-x`).textContent = (m20f/inv20).toFixed(1) + '×';
-  });
-  const lbl15 = su > 0 ? `${su}% step-up` : `flat ₹${(sip/1000).toFixed(0)}k/mo`;
-  document.getElementById('proj15-label').textContent = lbl15;
-  document.getElementById('proj20-label').textContent = lbl15;
-
-  // Forecast tab (R4 with step-up)
-  const c4 = CAGR.r4;
-  const f10 = sipWealth(sip, 10, c4, su);
-  const f15 = sipWealth(sip, 15, c4, su);
-  const f20 = sipWealth(sip, 20, c4, su);
-  const f25 = sipWealth(sip, 25, c4, su);
-  const f30 = sipWealth(sip, 30, c4, su);
-  const i10 = totalInvested(sip, 10, su), i15 = totalInvested(sip, 15, su);
-  const i20 = totalInvested(sip, 20, su), i25 = totalInvested(sip, 25, su), i30 = totalInvested(sip, 30, su);
-  document.getElementById('fw10').textContent = fmt(f10);
-  document.getElementById('fw15').textContent = fmt(f15);
-  document.getElementById('fw20').textContent = fmt(f20);
-  document.getElementById('fw25').textContent = fmt(f25);
-  document.getElementById('fw30').textContent = fmt(f30);
-  document.getElementById('inv10').textContent = fmt(i10);
-  document.getElementById('inv15').textContent = fmt(i15);
-  document.getElementById('inv20').textContent = fmt(i20);
-  document.getElementById('inv25').textContent = fmt(i25);
-  document.getElementById('inv30').textContent = fmt(i30);
-
-  const suLabel = su > 0 ? `SIP: ₹${sip.toLocaleString('en-IN')}/mo + ${su}% annual step-up` : `SIP: ₹${sip.toLocaleString('en-IN')}/mo (flat)`;
-  document.getElementById('fc-title').textContent = suLabel;
-  document.getElementById('fc-sub').textContent = `Based on ${(c4*100).toFixed(1)}% expected CAGR (R4)`;
-
-  // Flat vs step-up comparison
-  const flat20 = sipWealth(sip, 20, c4, 0);
-  const su20   = sipWealth(sip, 20, c4, su);
-  document.getElementById('flat20').textContent = fmt(flat20);
-  document.getElementById('stepup20').textContent = fmt(su20);
-  document.getElementById('delta20').textContent = '+' + fmt(su20 - flat20);
-  const pctMore = su > 0 ? Math.round((su20/flat20 - 1)*100) : 0;
-  document.getElementById('stepup-bar').style.width = Math.min(90, Math.max(5, pctMore/2)) + '%';
-  document.getElementById('stepup-pct').textContent = su > 0
-    ? `Step-up generates ${pctMore}% more wealth than flat SIP`
-    : 'Enable step-up to see the difference';
-
-  // 15yr all portfolios
-  ['r1','r2','r3','r4'].forEach(r => {
-    const w15 = sipWealth(sip, 15, CAGR[r], su);
-    document.getElementById('f15'+r).textContent = fmt(w15);
-  });
-
-  // Milestones (R4)
-  const targets = [5e6, 1e7, 2e7, 5e7];
-  const ids = ['ms50','ms1cr','ms2cr','ms5cr'];
-  const labels = ['₹50 Lakh','₹1 Crore','₹2 Crore','₹5 Crore'];
-  targets.forEach((t, i) => {
-    const y = yearsToTarget(sip, c4, t, su);
-    document.getElementById(ids[i]).textContent = y ? '~'+y+' yrs' : '30+ yrs';
-    document.getElementById(ids[i]+'-sub').textContent = su > 0 ? 'with step-up' : 'flat SIP';
-  });
-
-  // Update fund SIP amounts
-  ['r1','r2','r3','r4'].forEach(r => {
-    document.querySelectorAll(`.sip-fund-${r}`).forEach(el => {
-      const w = parseFloat(el.dataset.weight);
-      el.textContent = '₹' + Math.round(sip*w).toLocaleString('en-IN');
+function drawMainChart(){
+  const ctx=document.getElementById('mainChart').getContext('2d');
+  if(mainChart)mainChart.destroy();
+  const su=stepupOn?stepupPct:0,yrs=Array.from({length:26},(_,i)=>i),r=selR,col=RCOLORS[r],info=RINFO[r];
+  let ds=[],leg='';
+  if(chartView==='compare'){
+    ['r4','r1','r3','r2'].forEach(x=>{
+      const d=yrs.map(y=>y?sipW(sip,y,RINFO[x].cagr,0):0);
+      ds.push({label:x.toUpperCase(),data:d,borderColor:RCOLORS[x],tension:.4,pointRadius:0,borderWidth:x===selR?2.5:1.5,fill:false});
+      leg+=`<div class="legend-item"><div class="legend-dot" style="background:${RCOLORS[x]};${x!==selR?'opacity:.5':''}"></div>${x.toUpperCase()}${x===selR?' ●':''}</div>`;
     });
-  });
-
-  renderCharts();
-}
-
-// ── CHARTS ────────────────────────────────────────────────────────────
-let mainChart=null, cagrChart=null, investedChart=null;
-
-function getYears(max=25){ return Array.from({length:max+1},(_,i)=>i); }
-
-function drawMainChart() {
-  const ctx = document.getElementById('mainChart').getContext('2d');
-  if (mainChart) mainChart.destroy();
-  const su = stepupOn ? stepupPct : 0;
-  const years = getYears(25);
-
-  let datasets=[], legendHTML='';
-  const colors = ['#4cd9a0','#74b3f5','#f5b944','#f07070'];
-  const names  = ['R4 (All in)','R1 (Replaced)','R3 (Combined)','R2 (Baseline)'];
-  const rkeys  = ['r4','r1','r3','r2'];
-
-  if (chartView === 'compare') {
-    rkeys.forEach((r,i)=>{
-      const data = years.map(y => y===0 ? 0 : sipWealth(sip, y, CAGR[r], 0));
-      datasets.push({ label:names[i], data, borderColor:colors[i], tension:.4, pointRadius:0, borderWidth:2, fill:false });
-      legendHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div>${names[i]}</div>`;
-    });
-    document.getElementById('chart-main-title').textContent = 'All 4 portfolios · Flat SIP';
-  } else if (chartView === 'stepup') {
-    const flat = years.map(y => y===0 ? 0 : sipWealth(sip, y, CAGR.r4, 0));
-    const suData = years.map(y => y===0 ? 0 : sipWealth(sip, y, CAGR.r4, su));
-    datasets = [
-      { label:'With step-up', data:suData, borderColor:'#4cd9a0', tension:.4, pointRadius:0, borderWidth:2, fill:false },
-      { label:'Flat SIP', data:flat, borderColor:'#6b6863', tension:.4, pointRadius:0, borderWidth:1.5, fill:false, borderDash:[4,3] }
-    ];
-    legendHTML = `<div class="legend-item"><div class="legend-dot" style="background:#4cd9a0"></div>Step-up ${su}%</div><div class="legend-item"><div class="legend-dot" style="background:#6b6863"></div>Flat</div>`;
-    document.getElementById('chart-main-title').textContent = `R4: Flat vs ${su}% Step-Up`;
-  } else {
-    const data = years.map(y => y===0 ? 0 : sipWealth(sip, y, CAGR.r4, 0));
-    const inv  = years.map(y => totalInvested(sip, y, 0));
-    datasets = [
-      { label:'Wealth', data, borderColor:'#4cd9a0', tension:.4, pointRadius:0, borderWidth:2, fill:true,
-        backgroundColor:'rgba(76,217,160,0.08)' },
-      { label:'Invested', data:inv, borderColor:'#6b6863', tension:.4, pointRadius:0, borderWidth:1.5,
-        fill:false, borderDash:[4,3] }
-    ];
-    legendHTML = `<div class="legend-item"><div class="legend-dot" style="background:#4cd9a0"></div>Wealth</div><div class="legend-item"><div class="legend-dot" style="background:#6b6863"></div>Invested</div>`;
-    document.getElementById('chart-main-title').textContent = 'R4 (All in) · Flat SIP';
+    document.getElementById('chart-main-title').textContent='All 4 portfolios · Flat SIP (selected highlighted)';
+  }else if(chartView==='stepup'){
+    const flat=yrs.map(y=>y?sipW(sip,y,info.cagr,0):0),suD=yrs.map(y=>y?sipW(sip,y,info.cagr,su):0);
+    ds=[{label:`${r.toUpperCase()} + ${su}% step-up`,data:suD,borderColor:col,tension:.4,pointRadius:0,borderWidth:2.5,fill:true,backgroundColor:col+'18'},
+        {label:`${r.toUpperCase()} flat`,data:flat,borderColor:'#6b6863',tension:.4,pointRadius:0,borderWidth:1.5,fill:false,borderDash:[4,3]}];
+    leg=`<div class="legend-item"><div class="legend-dot" style="background:${col}"></div>${su}% step-up</div><div class="legend-item"><div class="legend-dot" style="background:#6b6863"></div>Flat</div>`;
+    document.getElementById('chart-main-title').textContent=`${r.toUpperCase()}: Flat vs ${su}% Step-Up`;
+  }else{
+    const d=yrs.map(y=>y?sipW(sip,y,info.cagr,0):0),inv=yrs.map(y=>y?totInv(sip,y,0):0);
+    ds=[{label:'Wealth',data:d,borderColor:col,tension:.4,pointRadius:0,borderWidth:2,fill:true,backgroundColor:col+'18'},
+        {label:'Invested',data:inv,borderColor:'#6b6863',tension:.4,pointRadius:0,borderWidth:1.5,fill:true,backgroundColor:'rgba(107,104,99,0.07)',borderDash:[4,3]}];
+    leg=`<div class="legend-item"><div class="legend-dot" style="background:${col}"></div>Wealth</div><div class="legend-item"><div class="legend-dot" style="background:#6b6863"></div>Invested</div>`;
+    document.getElementById('chart-main-title').textContent=`${r.toUpperCase()} wealth growth · Flat SIP`;
   }
-
-  document.getElementById('mainLegend').innerHTML = legendHTML;
-  mainChart = new Chart(ctx, {
-    type:'line',
-    data:{ labels:years.map(y=>y===0?'Now':y+"yr"), datasets },
-    options:{ responsive:true, plugins:{ legend:{display:false}, tooltip:{
-      callbacks:{ label: c => c.dataset.label+': '+fmt(c.raw) }
-    }}, scales:{
-      x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#6b6863',font:{size:9},maxTicksLimit:7} },
-      y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{ color:'#6b6863', font:{size:9}, callback: v=>fmtShort(v) } }
-    }}
-  });
+  document.getElementById('mainLegend').innerHTML=leg;
+  mainChart=new Chart(ctx,{type:'line',data:{labels:yrs.map(y=>y?y+'yr':'Now'),datasets:ds},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.raw)}}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9},maxTicksLimit:7}},
+    y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9},callback:v=>fmtS(v)}}}}});
 }
 
-function drawCagrChart() {
-  const ctx = document.getElementById('cagrChart').getContext('2d');
-  if (cagrChart) cagrChart.destroy();
-  const periods = [1,2,3,5,7,10,12,15,20,25,30];
-  const buildSeries = (cagr) => periods.map(p => {
-    const totalRet = Math.pow(1+cagr, p) - 1;
-    return (totalRet*100).toFixed(1);
+function drawCagrChart(){
+  const ctx=document.getElementById('cagrChart').getContext('2d');
+  if(cagrChart)cagrChart.destroy();
+  const periods=[1,2,3,5,7,10,12,15,20,25,30],r=selR,info=RINFO[r];
+  const mid=periods.map(()=>+(info.cagr*100).toFixed(1));
+  const upper=periods.map(p=>+Math.min(80,(info.cagr+info.vol/Math.sqrt(p))*100).toFixed(1));
+  const lower=periods.map(p=>+Math.max(0,(info.cagr-info.vol/Math.sqrt(p))*100).toFixed(1));
+  const ds=[
+    {label:`${r.toUpperCase()} upper band`,data:upper,borderColor:'transparent',tension:.4,pointRadius:0,borderWidth:0,fill:'+1',backgroundColor:RCOLORS[r]+'22',order:3},
+    {label:`${r.toUpperCase()} lower band`,data:lower,borderColor:'transparent',tension:.4,pointRadius:0,borderWidth:0,fill:false,order:4},
+    {label:`${r.toUpperCase()} expected`,data:mid,borderColor:RCOLORS[r],tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:RCOLORS[r],fill:false,order:1}
+  ];
+  Object.keys(RINFO).filter(x=>x!==r).forEach(x=>{
+    ds.push({label:x.toUpperCase(),data:periods.map(()=>+(RINFO[x].cagr*100).toFixed(1)),borderColor:RCOLORS[x],tension:.4,pointRadius:0,borderWidth:1,fill:false,borderDash:[3,3],order:2});
   });
-  cagrChart = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels: periods.map(p=>p+'yr'),
-      datasets:[
-        { label:'R4', data:buildSeries(CAGR.r4), borderColor:'#4cd9a0', tension:.4, pointRadius:3, borderWidth:2, pointBackgroundColor:'#4cd9a0' },
-        { label:'R1', data:buildSeries(CAGR.r1), borderColor:'#74b3f5', tension:.4, pointRadius:3, borderWidth:2, pointBackgroundColor:'#74b3f5' },
-        { label:'R2', data:buildSeries(CAGR.r2), borderColor:'#f07070', tension:.4, pointRadius:3, borderWidth:2, pointBackgroundColor:'#f07070' },
-      ]
-    },
-    options:{ responsive:true, plugins:{ legend:{display:false}, tooltip:{
-      callbacks:{ label: c => c.dataset.label+': '+c.raw+'% total return' }
-    }}, scales:{
-      x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#6b6863',font:{size:9}} },
-      y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{ color:'#6b6863',font:{size:9}, callback:v=>v+'%' } }
-    }}
-  });
+  const leg=Object.keys(RINFO).map(x=>`<div class="legend-item"><div class="legend-dot" style="background:${RCOLORS[x]};${x!==r?'opacity:.5':''}"></div>${x.toUpperCase()}${x===r?' + band':''}</div>`).join('');
+  document.getElementById('cagrLegend').innerHTML=leg;
+  cagrChart=new Chart(ctx,{type:'line',data:{labels:periods.map(p=>p+'yr'),datasets:ds},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{filter:i=>!i.dataset.label.includes('band'),
+      callbacks:{label:c=>{const p=periods[c.dataIndex];const rnf=RINFO[c.dataset.label.substring(0,2).toLowerCase()];const v=rnf?rnf.vol:0.14;return `${c.dataset.label}: ${c.raw}% CAGR (±${(v/Math.sqrt(p)*100).toFixed(0)}% range at ${p}yr)`;}}}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9}}},
+    y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9},callback:v=>v+'%'},
+      title:{display:true,text:'CAGR %',color:'#6b6863',font:{size:9}}}}}});
 }
 
-function drawInvestedChart() {
-  const ctx = document.getElementById('investedChart').getContext('2d');
-  if (investedChart) investedChart.destroy();
-  const years = getYears(20);
-  const wealth = years.map(y => y===0 ? 0 : sipWealth(sip, y, CAGR.r4, 0));
-  const invested = years.map(y => totalInvested(sip, y, 0));
-  investedChart = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels: years.map(y=>y===0?'Now':y+'yr'),
-      datasets:[
-        { label:'Wealth', data:wealth, borderColor:'#4cd9a0', tension:.4, pointRadius:0, borderWidth:2,
-          fill:true, backgroundColor:'rgba(76,217,160,0.1)' },
-        { label:'Invested', data:invested, borderColor:'#6b6863', tension:.4, pointRadius:0, borderWidth:1.5,
-          fill:true, backgroundColor:'rgba(107,104,99,0.07)', borderDash:[4,3] },
-      ]
-    },
-    options:{ responsive:true, plugins:{ legend:{display:false}, tooltip:{
-      callbacks:{ label: c => c.dataset.label+': '+fmt(c.raw) }
-    }}, scales:{
-      x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#6b6863',font:{size:9},maxTicksLimit:7} },
-      y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{ color:'#6b6863',font:{size:9}, callback:v=>fmtShort(v) } }
-    }}
-  });
+function drawInvestedChart(){
+  const ctx=document.getElementById('investedChart').getContext('2d');
+  if(investedChart)investedChart.destroy();
+  const su=stepupOn?stepupPct:0,yrs=Array.from({length:21},(_,i)=>i),r=selR,col=RCOLORS[r];
+  const wealth=yrs.map(y=>y?sipW(sip,y,RINFO[r].cagr,su):0);
+  const invested=yrs.map(y=>y?totInv(sip,y,su):0);
+  document.getElementById('inv-chart-title').textContent=`Invested vs wealth · ${r.toUpperCase()}${su>0?' + '+su+'% step-up':''}`;
+  investedChart=new Chart(ctx,{type:'line',data:{labels:yrs.map(y=>y?y+'yr':'Now'),datasets:[
+    {label:'Wealth',data:wealth,borderColor:col,tension:.4,pointRadius:0,borderWidth:2,fill:true,backgroundColor:col+'18'},
+    {label:'Invested',data:invested,borderColor:'#6b6863',tension:.4,pointRadius:0,borderWidth:1.5,fill:true,backgroundColor:'rgba(107,104,99,0.07)',borderDash:[4,3]}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.raw)}}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9},maxTicksLimit:7}},
+    y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b6863',font:{size:9},callback:v=>fmtS(v)}}}}});
 }
 
-function renderCharts() {
-  if (document.getElementById('chart').classList.contains('active') ||
-      document.getElementById('mainChart').getAttribute('data-init')) {
-    drawMainChart(); drawCagrChart(); drawInvestedChart();
-    document.getElementById('mainChart').setAttribute('data-init','1');
+function renderCharts(){
+  if(document.getElementById('chart').classList.contains('active')){
+    drawMainChart();drawCagrChart();drawInvestedChart();
   }
 }
-
-function switchChartView(v) {
-  chartView = v;
-  document.querySelectorAll('.ctab').forEach((b,i) => {
-    b.classList.toggle('active', ['flat','stepup','compare'][i]===v);
-  });
-  drawMainChart();
+function switchChartView(v){
+  chartView=v;
+  document.querySelectorAll('.ctab').forEach((b,i)=>b.classList.toggle('active',['flat','stepup','compare'][i]===v));
+  if(mainChart)drawMainChart();
 }
-
-// ── UI HELPERS ────────────────────────────────────────────────────────
-function toggleStepup(on) {
-  stepupOn = on;
-  document.getElementById('su-on').classList.toggle('active', on);
-  document.getElementById('su-off').classList.toggle('active', !on);
+function toggleStepup(on){
+  stepupOn=on;
+  document.getElementById('su-on').classList.toggle('active',on);
+  document.getElementById('su-off').classList.toggle('active',!on);
   updateAll();
 }
-function setSIP(v) {
-  document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('sel'));
-  const vals={5000:'q5',10000:'q10',25000:'q25',50000:'q50',100000:'q1l',200000:'q2l'};
-  if(vals[v]) document.getElementById(vals[v]) && document.getElementById(vals[v]).classList.add('sel');
+function setSIP(v){
+  document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('sel'));
+  event.target.classList.add('sel');
   updateAll(v);
 }
-function show(id, btn) {
+function show(id,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+  if(btn)btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if (id === 'chart') {
-    setTimeout(()=>{ drawMainChart(); drawCagrChart(); drawInvestedChart(); },50);
-  }
+  if(id==='chart')setTimeout(()=>{drawMainChart();drawCagrChart();drawInvestedChart();},60);
 }
-
-// ── CHART.JS LOAD ─────────────────────────────────────────────────────
-const s = document.createElement('script');
-s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
-s.onload = () => { renderFunds(); updateAll(); };
+const s=document.createElement('script');
+s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+s.onload=()=>{selectR('r4');updateAll();};
 document.head.appendChild(s);
 </script>
 </body>
