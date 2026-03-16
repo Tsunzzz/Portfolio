@@ -121,13 +121,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* section title */
 .section-title{font-size:11px;font-weight:500;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding:0 2px}
+
+/* sip adjuster */
+.sip-adjuster{background:var(--bg);border-bottom:0.5px solid var(--bdr);padding:12px 16px;display:flex;align-items:center;gap:12px}
+.sip-adjuster-label{font-size:12px;color:var(--txt2);flex-shrink:0}
+.sip-adjuster input[type=range]{flex:1;accent-color:var(--accent)}
+.sip-adjuster-val{font-size:15px;font-weight:600;color:var(--accent);min-width:72px;text-align:right;flex-shrink:0}
+.sip-input-row{background:var(--bg);padding:0 16px 12px;display:flex;align-items:center;gap:8px;border-bottom:0.5px solid var(--bdr)}
+.sip-input-row span{font-size:16px;color:var(--txt2);font-weight:500}
+.sip-input-row input[type=number]{flex:1;border:0.5px solid var(--bdr2);border-radius:var(--r);padding:8px 10px;font-size:15px;font-weight:500;background:var(--bg2);color:var(--txt);font-family:inherit;-moz-appearance:textfield}
+.sip-input-row input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.quick-btns{display:flex;gap:6px;padding:10px 16px;background:var(--bg);border-bottom:0.5px solid var(--bdr);flex-wrap:wrap}
+.quick-btn{font-size:11px;padding:5px 10px;border-radius:20px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt2);cursor:pointer;font-family:inherit}
+.quick-btn:active{background:var(--bg2)}
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>Portfolio Comparison</h1>
-  <p>4 experiments · ₹10,000/mo SIP · Risk-free rate 6.5% · 16 Mar 2026</p>
+  <p>4 experiments · <span id="header-sip">₹10,000</span>/mo SIP · Risk-free rate 6.5% · 16 Mar 2026</p>
+</div>
+
+<div class="sip-adjuster">
+  <span class="sip-adjuster-label">Monthly SIP</span>
+  <input type="range" id="sip-slider" min="1000" max="200000" step="500" value="10000" oninput="updateSIP(this.value)">
+  <span class="sip-adjuster-val" id="sip-display">₹10,000</span>
+</div>
+<div class="sip-input-row">
+  <span>₹</span>
+  <input type="number" id="sip-input" value="10000" min="500" max="10000000" step="500" oninput="updateSIP(this.value)" placeholder="Enter amount">
+</div>
+<div class="quick-btns">
+  <button class="quick-btn" onclick="updateSIP(5000)">₹5K</button>
+  <button class="quick-btn" onclick="updateSIP(10000)">₹10K</button>
+  <button class="quick-btn" onclick="updateSIP(25000)">₹25K</button>
+  <button class="quick-btn" onclick="updateSIP(50000)">₹50K</button>
+  <button class="quick-btn" onclick="updateSIP(100000)">₹1L</button>
+  <button class="quick-btn" onclick="updateSIP(200000)">₹2L</button>
 </div>
 
 <div class="kpi-strip">
@@ -279,7 +310,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.4000">₹4,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
@@ -295,7 +326,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">19.5%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,954</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1954">₹1,954</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:48.8%"></div></div><div class="pct-label">19.5%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
@@ -311,7 +342,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1500">₹1,500</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
@@ -327,7 +358,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1000">₹1,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
@@ -343,7 +374,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">9.9%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹988</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0988">₹988</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:24.7%"></div></div><div class="pct-label">9.9%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
@@ -359,7 +390,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">5.6%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹557</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0557">₹557</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:14%"></div></div><div class="pct-label">5.6%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118778</span></div>
@@ -381,7 +412,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">19.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,903</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1903">₹1,903</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:47.5%"></div></div><div class="pct-label">19.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">127042</span></div>
@@ -397,7 +428,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">17.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,697</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1697">₹1,697</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:42.4%"></div></div><div class="pct-label">17.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119835</span></div>
@@ -413,7 +444,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1600">₹1,600</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
@@ -429,7 +460,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1600">₹1,600</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">147946</span></div>
@@ -445,7 +476,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1600">₹1,600</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120596</span></div>
@@ -461,7 +492,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1600">₹1,600</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118632</span></div>
@@ -482,7 +513,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.4000">₹4,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
@@ -498,7 +529,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.3%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,633</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1633">₹1,633</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40.8%"></div></div><div class="pct-label">16.3%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">125497</span></div>
@@ -514,7 +545,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1500">₹1,500</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
@@ -530,7 +561,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1000">₹1,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
@@ -546,7 +577,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">8.7%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹866</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0866">₹866</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:21.7%"></div></div><div class="pct-label">8.7%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
@@ -562,7 +593,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">6.4%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹644</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0644">₹644</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:16%"></div></div><div class="pct-label">6.4%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
@@ -578,7 +609,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">3.6%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹357</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0357">₹357</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:9%"></div></div><div class="pct-label">3.6%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120381</span></div>
@@ -599,7 +630,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.4000">₹4,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
@@ -615,7 +646,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1500">₹1,500</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
@@ -631,7 +662,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1000">₹1,000</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
@@ -647,7 +678,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.6%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,057</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.1057">₹1,057</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:26.4%"></div></div><div class="pct-label">10.6%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
@@ -663,7 +694,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">8.9%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹893</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0893">₹893</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:22.3%"></div></div><div class="pct-label">8.9%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">125497</span></div>
@@ -679,7 +710,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">5.7%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹565</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0565">₹565</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:14.2%"></div></div><div class="pct-label">5.7%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">127042</span></div>
@@ -695,7 +726,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">4.4%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹438</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0438">₹438</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:11%"></div></div><div class="pct-label">4.4%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120381</span></div>
@@ -711,7 +742,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">3.3%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹332</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0332">₹332</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:8.3%"></div></div><div class="pct-label">3.3%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119835</span></div>
@@ -727,7 +758,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fund-body">
       <div class="fund-meta">
         <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">2.2%</div></div>
-        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹215</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val sip-amt" data-weight="0.0215">₹215</div></div>
       </div>
       <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:5.4%"></div></div><div class="pct-label">2.2%</div></div>
       <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
@@ -738,41 +769,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <!-- SIP PROJECTIONS -->
 <div id="sip" class="panel">
-  <div class="section-title">sip wealth projections — ₹10,000 / month</div>
+  <div class="section-title">sip wealth projections</div>
 
   <div class="sip-card">
-    <div class="sip-header">10 years · Total invested ₹12.0L</div>
+    <div class="sip-header" id="sip-h10">10 years · Total invested <span id="inv10">₹12.0L</span></div>
     <div class="sip-row">
       <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
     </div>
     <div class="sip-row">
-      <div class="sip-cell">~₹29.6L</div><div class="sip-cell">~₹27.1L</div><div class="sip-cell">~₹28.5L</div><div class="sip-cell highlight">₹29.6L</div>
+      <div class="sip-cell" id="w10r1">₹29.6L</div>
+      <div class="sip-cell" id="w10r2">₹27.1L</div>
+      <div class="sip-cell" id="w10r3">₹28.5L</div>
+      <div class="sip-cell highlight" id="w10r4">₹29.6L</div>
     </div>
   </div>
 
   <div class="sip-card">
-    <div class="sip-header">15 years · Total invested ₹18.0L</div>
+    <div class="sip-header">15 years · Total invested <span id="inv15">₹18.0L</span></div>
     <div class="sip-row">
       <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
     </div>
     <div class="sip-row">
-      <div class="sip-cell">₹67.0L<br><span style="font-size:10px;color:var(--txt3)">3.7×</span></div>
-      <div class="sip-cell">₹61.6L<br><span style="font-size:10px;color:var(--txt3)">3.4×</span></div>
-      <div class="sip-cell">₹65.5L<br><span style="font-size:10px;color:var(--txt3)">3.6×</span></div>
-      <div class="sip-cell highlight">₹66.1L<br><span style="font-size:10px">3.7×</span></div>
+      <div class="sip-cell" id="w15r1">₹67.0L<br><span style="font-size:10px;color:var(--txt3)">3.7×</span></div>
+      <div class="sip-cell" id="w15r2">₹61.6L<br><span style="font-size:10px;color:var(--txt3)">3.4×</span></div>
+      <div class="sip-cell" id="w15r3">₹65.5L<br><span style="font-size:10px;color:var(--txt3)">3.6×</span></div>
+      <div class="sip-cell highlight" id="w15r4">₹66.1L<br><span style="font-size:10px">3.7×</span></div>
     </div>
   </div>
 
   <div class="sip-card">
-    <div class="sip-header">20 years · Total invested ₹24.0L</div>
+    <div class="sip-header">20 years · Total invested <span id="inv20">₹24.0L</span></div>
     <div class="sip-row">
       <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
     </div>
     <div class="sip-row">
-      <div class="sip-cell">₹1.75 Cr<br><span style="font-size:10px;color:var(--txt3)">7.3×</span></div>
-      <div class="sip-cell">₹1.51 Cr<br><span style="font-size:10px;color:var(--txt3)">6.3×</span></div>
-      <div class="sip-cell">₹1.72 Cr<br><span style="font-size:10px;color:var(--txt3)">7.2×</span></div>
-      <div class="sip-cell highlight">₹1.72 Cr<br><span style="font-size:10px">7.2×</span></div>
+      <div class="sip-cell" id="w20r1">₹1.75 Cr<br><span style="font-size:10px;color:var(--txt3)">7.3×</span></div>
+      <div class="sip-cell" id="w20r2">₹1.51 Cr<br><span style="font-size:10px;color:var(--txt3)">6.3×</span></div>
+      <div class="sip-cell" id="w20r3">₹1.72 Cr<br><span style="font-size:10px;color:var(--txt3)">7.2×</span></div>
+      <div class="sip-cell highlight" id="w20r4">₹1.72 Cr<br><span style="font-size:10px">7.2×</span></div>
     </div>
   </div>
 
@@ -786,12 +820,70 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
 
-  <div class="note">Projections are Monte Carlo medians (50th percentile). Actual results depend on market conditions, expense ratios, and rebalancing. Rebalance quarterly when any fund drifts ±5% from target weight.</div>
+  <div class="note">Projections scale linearly from base ₹10,000/mo Monte Carlo medians. Actual results depend on market conditions, expense ratios, and rebalancing. Rebalance quarterly when any fund drifts ±5% from target weight.</div>
 </div>
 
 <p class="disclaimer">For research & educational purposes only · Not financial advice · Consult a SEBI-registered investment adviser before investing</p>
 
 <script>
+const BASE = 10000;
+const BASE_PROJ = {
+  r1: { y10: 2960000, y15: 6700850, y20: 17465337 },
+  r2: { y10: 2710000, y15: 6162855, y20: 15147329 },
+  r3: { y10: 2850000, y15: 6554849, y20: 17172553 },
+  r4: { y10: 2955600, y15: 6610914, y20: 17233995 }
+};
+
+function fmt(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(1) + 'L';
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+function fmtSIP(n) {
+  if (n >= 100000) return '₹' + (n/100000).toFixed(n%100000===0?0:1) + 'L';
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+function fmtInv(months, sip) {
+  const n = months * sip;
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(1) + 'L';
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+function updateSIP(val) {
+  val = Math.max(500, parseInt(val) || 500);
+  const ratio = val / BASE;
+
+  document.getElementById('sip-slider').value = Math.min(val, 200000);
+  document.getElementById('sip-input').value = val;
+  document.getElementById('sip-display').textContent = fmtSIP(val);
+  document.getElementById('header-sip').textContent = fmtSIP(val);
+
+  document.querySelectorAll('.sip-amt').forEach(el => {
+    const w = parseFloat(el.dataset.weight);
+    const amt = Math.round(val * w);
+    el.textContent = '₹' + amt.toLocaleString('en-IN');
+  });
+
+  ['r1','r2','r3','r4'].forEach(r => {
+    const p = BASE_PROJ[r];
+    const m10 = Math.round(p.y10 * ratio);
+    const m15 = Math.round(p.y15 * ratio);
+    const m20 = Math.round(p.y20 * ratio);
+    const inv15 = val * 180, inv20 = val * 240;
+    const x15 = (m15/inv15).toFixed(1), x20 = (m20/inv20).toFixed(1);
+    document.getElementById('w10'+r).textContent = fmt(m10);
+    document.getElementById('w15'+r).innerHTML = fmt(m15)+'<br><span style="font-size:10px;color:var(--txt3)">'+x15+'×</span>';
+    document.getElementById('w20'+r).innerHTML = fmt(m20)+'<br><span style="font-size:10px;color:var(--txt3)">'+x20+'×</span>';
+  });
+  document.querySelector('#w15r4 span').style.color='';
+  document.querySelector('#w20r4 span').style.color='';
+
+  document.getElementById('inv10').textContent = fmtInv(120, val);
+  document.getElementById('inv15').textContent = fmtInv(180, val);
+  document.getElementById('inv20').textContent = fmtInv(240, val);
+}
+
 function show(id,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
