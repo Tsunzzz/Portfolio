@@ -2,260 +2,802 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio Comparison — All 4 Experiments</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Portfolio Comparison</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f5f4f0;
-    --color-background-tertiary: #eeede9;
-    --color-text-primary: #1a1a18;
-    --color-text-secondary: #5f5e5a;
-    --color-text-tertiary: #888780;
-    --color-border-tertiary: rgba(0,0,0,0.12);
-    --color-border-secondary: rgba(0,0,0,0.25);
-    --color-border-primary: rgba(0,0,0,0.35);
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f5f4f0;--bg3:#eceae4;
+  --txt:#1a1a18;--txt2:#5f5e5a;--txt3:#908e87;
+  --bdr:rgba(0,0,0,0.10);--bdr2:rgba(0,0,0,0.20);
+  --green:#0F6E56;--green-bg:#E1F5EE;
+  --blue:#185FA5;--blue-bg:#E6F1FB;
+  --amber:#854F0B;--amber-bg:#FEF3E2;
+  --red:#A32D2D;--red-bg:#FCEBEB;
+  --accent:#1D9E75;
+  --r:10px;--r2:14px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1e1e1c;--bg2:#272724;--bg3:#111110;
+    --txt:#f0ede6;--txt2:#9e9c95;--txt3:#6b6a65;
+    --bdr:rgba(255,255,255,0.09);--bdr2:rgba(255,255,255,0.18);
+    --green:#5DCAA5;--green-bg:#083424;
+    --blue:#85B7EB;--blue-bg:#042C53;
+    --amber:#EF9F27;--amber-bg:#412402;
+    --red:#F09595;--red-bg:#501313;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background-primary: #1e1e1c;
-      --color-background-secondary: #2a2a27;
-      --color-background-tertiary: #141413;
-      --color-text-primary: #f0ede6;
-      --color-text-secondary: #a09e97;
-      --color-text-tertiary: #6b6a65;
-      --color-border-tertiary: rgba(255,255,255,0.10);
-      --color-border-secondary: rgba(255,255,255,0.20);
-      --color-border-primary: rgba(255,255,255,0.30);
-    }
-  }
-  body {
-    font-family: var(--font-sans);
-    background: var(--color-background-tertiary);
-    color: var(--color-text-primary);
-    padding: 2rem 1rem;
-    min-height: 100vh;
-  }
-  .container { max-width: 960px; margin: 0 auto; }
-  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 24px; }
-  .section-title { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 24px; }
-  @media (max-width: 600px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
-  .kpi { background: var(--color-background-primary); border-radius: var(--border-radius-md); padding: 12px 14px; border: 0.5px solid var(--color-border-tertiary); }
-  .kpi-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
-  .kpi-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
-  .kpi-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; }
-  .winner { border: 2px solid #1D9E75; }
-  .winner .kpi-val { color: #0F6E56; }
-  .card { background: var(--color-background-primary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 20px; margin-bottom: 16px; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; font-weight: 500; font-size: 11px; color: var(--color-text-secondary); padding: 8px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; }
-  td { padding: 8px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  .tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; margin-right: 3px; margin-bottom: 3px; }
-  .core { background: #E1F5EE; color: #0F6E56; }
-  .satellite { background: #E6F1FB; color: #185FA5; }
-  .hedge { background: #FAEEDA; color: #854F0B; }
-  .best { background: #EAF3DE; color: #3B6D11; font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
-  .warn { background: #FCEBEB; color: #A32D2D; font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
-  .highlight { background: var(--color-background-secondary); }
-  .tab-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
-  .tab { font-size: 12px; padding: 5px 12px; border-radius: 20px; cursor: pointer; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); background: transparent; font-family: var(--font-sans); }
-  .tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
-  .panel { display: none; } .panel.active { display: block; }
-  .note { font-size: 12px; color: var(--color-text-secondary); padding: 10px 12px; border-left: 2px solid var(--color-border-secondary); margin-top: 12px; line-height: 1.5; }
-  .fund-row td:first-child { font-weight: 500; }
-  .pct-bar-wrap { display: flex; align-items: center; gap: 6px; }
-  .pct-bar { height: 6px; border-radius: 3px; background: #1D9E75; min-width: 2px; }
-  .sip-badge { font-size: 11px; color: var(--color-text-secondary); }
-  .r1 { color: #D85A30; }
-  .g1 { color: #1D9E75; }
-  .disclaimer { font-size: 11px; color: var(--color-text-tertiary); margin-top: 24px; padding-top: 16px; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.6; }
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--txt);font-size:15px;line-height:1.5;padding-bottom:32px}
+
+/* header */
+.header{background:var(--bg);border-bottom:0.5px solid var(--bdr);padding:16px}
+.header h1{font-size:17px;font-weight:600;margin-bottom:2px}
+.header p{font-size:12px;color:var(--txt3)}
+
+/* kpi strip */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.kpi{background:var(--bg);border-radius:var(--r);padding:12px;border:0.5px solid var(--bdr)}
+.kpi.winner{border:1.5px solid var(--accent)}
+.kpi-label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.kpi-val{font-size:22px;font-weight:600;color:var(--txt)}
+.kpi.winner .kpi-val{color:var(--accent)}
+.kpi-sub{font-size:11px;color:var(--txt2);margin-top:2px}
+.kpi-badge{display:inline-block;font-size:10px;background:var(--green-bg);color:var(--green);padding:2px 6px;border-radius:4px;margin-top:4px;font-weight:500}
+
+/* tabs */
+.tabs-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--bg);border-bottom:0.5px solid var(--bdr);position:sticky;top:0;z-index:10}
+.tabs{display:flex;gap:0;white-space:nowrap;padding:0 12px}
+.tab{font-size:13px;padding:12px 14px;cursor:pointer;border:none;background:none;color:var(--txt2);font-family:inherit;border-bottom:2px solid transparent;flex-shrink:0}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500}
+
+/* panels */
+.panel{display:none;padding:12px}
+.panel.active{display:block}
+
+/* comparison cards */
+.metric-card{background:var(--bg);border-radius:var(--r);border:0.5px solid var(--bdr);margin-bottom:8px;overflow:hidden}
+.metric-label{font-size:11px;color:var(--txt3);padding:10px 12px 2px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.metric-row{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.metric-cell{padding:8px 12px 10px;border-right:0.5px solid var(--bdr)}
+.metric-cell:last-child{border-right:none}
+.metric-cell:nth-child(3),.metric-cell:nth-child(4){border-top:0.5px solid var(--bdr)}
+.rname{font-size:10px;color:var(--txt3);margin-bottom:2px}
+.rval{font-size:15px;font-weight:500;color:var(--txt)}
+.best-val{color:var(--green)}
+.worst-val{color:var(--red)}
+.badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;margin-top:2px;vertical-align:middle}
+.b-best{background:var(--green-bg);color:var(--green)}
+.b-worst{background:var(--red-bg);color:var(--red)}
+
+/* fund cards */
+.fund-card{background:var(--bg);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:10px;overflow:hidden}
+.fund-header{padding:12px 14px 10px;border-bottom:0.5px solid var(--bdr)}
+.fund-name{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:6px;line-height:1.3}
+.fund-tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500}
+.tag-core{background:var(--green-bg);color:var(--green)}
+.tag-satellite{background:var(--blue-bg);color:var(--blue)}
+.tag-hedge{background:var(--amber-bg);color:var(--amber)}
+.fund-body{padding:10px 14px 12px}
+.fund-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.meta-item{display:flex;flex-direction:column;gap:2px}
+.meta-label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em}
+.meta-val{font-size:13px;font-weight:500;color:var(--txt)}
+.code-row{background:var(--bg2);border-radius:var(--r);padding:8px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.code-row:last-child{margin-bottom:0}
+.code-label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
+.code-val{font-size:12px;font-weight:500;color:var(--txt);font-family:monospace;text-align:right;word-break:break-all}
+.pct-bar-wrap{display:flex;align-items:center;gap:8px;margin-top:8px}
+.pct-bar-bg{flex:1;height:5px;background:var(--bdr);border-radius:3px;overflow:hidden}
+.pct-bar-fill{height:100%;background:var(--accent);border-radius:3px}
+.pct-label{font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0;min-width:36px;text-align:right}
+
+/* SIP table */
+.sip-card{background:var(--bg);border-radius:var(--r2);border:0.5px solid var(--bdr);margin-bottom:10px;overflow:hidden}
+.sip-header{padding:12px 14px;border-bottom:0.5px solid var(--bdr);font-size:14px;font-weight:600}
+.sip-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:0.5px solid var(--bdr)}
+.sip-row:last-child{border-bottom:none}
+.sip-cell{padding:10px 10px;font-size:12px;border-right:0.5px solid var(--bdr)}
+.sip-cell:last-child{border-right:none}
+.sip-cell.head{font-size:10px;color:var(--txt3);font-weight:500;text-transform:uppercase;letter-spacing:.04em;background:var(--bg2)}
+.sip-cell.horizon{font-weight:600;font-size:13px}
+.sip-cell.highlight{color:var(--green);font-weight:600}
+
+/* note */
+.note{font-size:12px;color:var(--txt2);line-height:1.6;padding:10px 12px;border-left:2px solid var(--bdr2);margin-top:10px;background:var(--bg);border-radius:0 var(--r) var(--r) 0}
+
+/* verdict summary */
+.verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.verdict-card{background:var(--bg);border-radius:var(--r);padding:12px;border:0.5px solid var(--bdr)}
+.verdict-card.winner{border:1.5px solid var(--accent)}
+.verdict-r{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--txt3);margin-bottom:4px;font-weight:500}
+.verdict-main{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:4px}
+.verdict-desc{font-size:11px;color:var(--txt2);line-height:1.4}
+
+/* disclaimer */
+.disclaimer{font-size:11px;color:var(--txt3);padding:12px;line-height:1.6;text-align:center}
+
+/* section title */
+.section-title{font-size:11px;font-weight:500;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding:0 2px}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Portfolio Comparison — All 4 Experiments</h1>
-  <p class="subtitle">Indian Mutual Funds — Core + Satellite + Hedge SIP Portfolio Construction · Generated: 16 March 2026 · Monthly SIP: ₹10,000</p>
 
-  <div class="section-title">portfolio snapshot — all 4 experiments</div>
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-label">Report 1 — Replaced</div>
-      <div class="kpi-val">16.8%</div>
-      <div class="kpi-sub">return · Sharpe 0.80</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Report 2 — Baseline equal dist</div>
-      <div class="kpi-val">16.2%</div>
-      <div class="kpi-sub">return · Sharpe 0.62</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Report 3 — Baseline + replaced</div>
-      <div class="kpi-val">16.7%</div>
-      <div class="kpi-sub">return · Sharpe 0.82</div>
-    </div>
-    <div class="kpi winner">
-      <div class="kpi-label">Report 4 — All in</div>
-      <div class="kpi-val">16.6%</div>
-      <div class="kpi-sub">return · Sharpe 0.84 ★ best</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="tab-bar">
-      <button class="tab active" onclick="show('compare', this)">Key comparison</button>
-      <button class="tab" onclick="show('funds1', this)">Report 1 funds</button>
-      <button class="tab" onclick="show('funds2', this)">Report 2 funds</button>
-      <button class="tab" onclick="show('funds3', this)">Report 3 funds</button>
-      <button class="tab" onclick="show('funds4', this)">Report 4 funds</button>
-      <button class="tab" onclick="show('sip', this)">SIP projections</button>
-    </div>
-
-    <div id="compare" class="panel active">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:200px">Metric</th>
-              <th>R1 · Replaced</th>
-              <th>R2 · Baseline equal</th>
-              <th>R3 · Baseline + replaced</th>
-              <th>R4 · All in</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>No. of funds in universe</td><td>6</td><td>6</td><td>11</td><td>13</td></tr>
-            <tr class="highlight"><td>Expected annual return</td><td>16.8%</td><td>16.2%</td><td>16.7%</td><td>16.6%</td></tr>
-            <tr><td>Annual volatility (risk)</td><td>12.9%</td><td class="r1">15.7% <span class="warn">highest risk</span></td><td>12.4%</td><td class="g1">12.1% <span class="best">lowest risk</span></td></tr>
-            <tr class="highlight"><td>Sharpe ratio <span style="font-size:11px;color:var(--color-text-secondary)">(return per unit risk)</span></td><td>0.80</td><td class="r1">0.62 <span class="warn">lowest</span></td><td>0.82</td><td class="g1">0.84 <span class="best">best</span></td></tr>
-            <tr><td>Max drawdown <span style="font-size:11px;color:var(--color-text-secondary)">(worst drop)</span></td><td>-19.1%</td><td class="r1">-20.7% <span class="warn">worst fall</span></td><td>-15.2%</td><td class="g1">-14.2% <span class="best">safest floor</span></td></tr>
-            <tr class="highlight"><td>15-yr SIP wealth (₹10k/mo)</td><td>₹67.0L</td><td>₹61.6L</td><td>₹65.5L</td><td>₹66.1L</td></tr>
-            <tr><td>20-yr SIP median wealth</td><td>₹1.75 Cr</td><td>₹1.51 Cr</td><td>₹1.72 Cr</td><td>₹1.72 Cr</td></tr>
-            <tr class="highlight"><td>20-yr wealth multiple</td><td>7.3×</td><td>6.3×</td><td>7.2×</td><td>7.2×</td></tr>
-            <tr><td>Probability of loss (20 yr)</td><td class="g1">0.00%</td><td class="g1">0.00%</td><td class="g1">0.00%</td><td class="g1">0.00%</td></tr>
-            <tr class="highlight"><td>Gold ETF included?</td><td>Yes — 10%</td><td>No</td><td>Yes — 10%</td><td>Yes — 10%</td></tr>
-            <tr><td>Has US exposure?</td><td>Yes — S&amp;P 500 15%</td><td>No</td><td>Yes — S&amp;P 500 15%</td><td>Yes — S&amp;P 500 15%</td></tr>
-            <tr class="highlight"><td>Kotak Contra weight</td><td>40%</td><td>0%</td><td>40%</td><td>40%</td></tr>
-            <tr><td>Verdict</td><td>Strong, clean, tested</td><td><span class="warn">Weakest overall</span></td><td>Very good — slightly better risk</td><td><span class="best">Best risk-adjusted</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">Sharpe ratio = how much return you get for every unit of risk taken. Higher is better. A ratio of 0.84 (Report 4) vs 0.62 (Report 2) means you're getting ~35% more return per unit of risk in Report 4.</div>
-    </div>
-
-    <div id="funds1" class="panel">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Fund</th><th>Role</th><th>Weight</th><th>Monthly SIP</th></tr></thead>
-          <tbody>
-            <tr class="fund-row"><td>Kotak Contra Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:80px"></div><span>40.0%</span></div></td><td class="sip-badge">₹4,000</td></tr>
-            <tr class="fund-row"><td>Nippon India Growth Mid Cap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:39px"></div><span>19.5%</span></div></td><td class="sip-badge">₹1,954</td></tr>
-            <tr class="fund-row"><td>Motilal Oswal S&amp;P 500 Index - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:30px"></div><span>15.0%</span></div></td><td class="sip-badge">₹1,500</td></tr>
-            <tr class="fund-row"><td>Tata Gold ETF</td><td><span class="tag hedge">Hedge</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:20px"></div><span>10.0%</span></div></td><td class="sip-badge">₹1,000</td></tr>
-            <tr class="fund-row"><td>HDFC Focused Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:20px"></div><span>9.9%</span></div></td><td class="sip-badge">₹988</td></tr>
-            <tr class="fund-row"><td>Nippon India Small Cap - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:11px"></div><span>5.6%</span></div></td><td class="sip-badge">₹557</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">6 funds total. Clean focused portfolio — 3 core, 2 satellite, 1 gold hedge. Best for someone who wants simplicity with very good risk-return.</div>
-    </div>
-
-    <div id="funds2" class="panel">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Fund</th><th>Role</th><th>Weight</th><th>Monthly SIP</th></tr></thead>
-          <tbody>
-            <tr class="fund-row"><td>Motilal Oswal Midcap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:38px"></div><span>19.0%</span></div></td><td class="sip-badge">₹1,903</td></tr>
-            <tr class="fund-row"><td>SBI Contra Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:34px"></div><span>17.0%</span></div></td><td class="sip-badge">₹1,697</td></tr>
-            <tr class="fund-row"><td>HDFC Focused Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:32px"></div><span>16.0%</span></div></td><td class="sip-badge">₹1,600</td></tr>
-            <tr class="fund-row"><td>Bandhan Small Cap - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:32px"></div><span>16.0%</span></div></td><td class="sip-badge">₹1,600</td></tr>
-            <tr class="fund-row"><td>ICICI Prudential Large &amp; Mid Cap - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:32px"></div><span>16.0%</span></div></td><td class="sip-badge">₹1,600</td></tr>
-            <tr class="fund-row"><td>Nippon India Large Cap - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:32px"></div><span>16.0%</span></div></td><td class="sip-badge">₹1,600</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">6 funds, roughly equal weights — hence "equal distribution". No gold hedge, no US exposure. This is the weakest performer with the most risk and lowest Sharpe. The "baseline" before optimisation.</div>
-    </div>
-
-    <div id="funds3" class="panel">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Fund</th><th>Role</th><th>Weight</th><th>Monthly SIP</th></tr></thead>
-          <tbody>
-            <tr class="fund-row"><td>Kotak Contra Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:80px"></div><span>40.0%</span></div></td><td class="sip-badge">₹4,000</td></tr>
-            <tr class="fund-row"><td>SBI Small Cap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:33px"></div><span>16.3%</span></div></td><td class="sip-badge">₹1,633</td></tr>
-            <tr class="fund-row"><td>Motilal Oswal S&amp;P 500 Index - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:30px"></div><span>15.0%</span></div></td><td class="sip-badge">₹1,500</td></tr>
-            <tr class="fund-row"><td>Tata Gold ETF</td><td><span class="tag hedge">Hedge</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:20px"></div><span>10.0%</span></div></td><td class="sip-badge">₹1,000</td></tr>
-            <tr class="fund-row"><td>Nippon India Growth Mid Cap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:17px"></div><span>8.7%</span></div></td><td class="sip-badge">₹866</td></tr>
-            <tr class="fund-row"><td>HDFC Focused Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:13px"></div><span>6.4%</span></div></td><td class="sip-badge">₹644</td></tr>
-            <tr class="fund-row"><td>ICICI Prudential MidCap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:7px"></div><span>3.6%</span></div></td><td class="sip-badge">₹357</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">7 funds. Combines the best of baseline and replaced universe — baseline funds re-weighted to match replaced fund weightings. Second-best Sharpe (0.82) with very low drawdown (-15.2%).</div>
-    </div>
-
-    <div id="funds4" class="panel">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Fund</th><th>Role</th><th>Weight</th><th>Monthly SIP</th></tr></thead>
-          <tbody>
-            <tr class="fund-row"><td>Kotak Contra Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:80px"></div><span>40.0%</span></div></td><td class="sip-badge">₹4,000</td></tr>
-            <tr class="fund-row"><td>Nippon India Growth Mid Cap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:21px"></div><span>10.6%</span></div></td><td class="sip-badge">₹1,057</td></tr>
-            <tr class="fund-row"><td>SBI Small Cap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:18px"></div><span>8.9%</span></div></td><td class="sip-badge">₹893</td></tr>
-            <tr class="fund-row"><td>Motilal Oswal S&amp;P 500 Index - Direct</td><td><span class="tag satellite">Satellite</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:30px"></div><span>15.0%</span></div></td><td class="sip-badge">₹1,500</td></tr>
-            <tr class="fund-row"><td>Tata Gold ETF</td><td><span class="tag hedge">Hedge</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:20px"></div><span>10.0%</span></div></td><td class="sip-badge">₹1,000</td></tr>
-            <tr class="fund-row"><td>ICICI Prudential MidCap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:9px"></div><span>4.4%</span></div></td><td class="sip-badge">₹438</td></tr>
-            <tr class="fund-row"><td>Motilal Oswal Midcap - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:11px"></div><span>5.7%</span></div></td><td class="sip-badge">₹565</td></tr>
-            <tr class="fund-row"><td>SBI Contra Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:7px"></div><span>3.3%</span></div></td><td class="sip-badge">₹332</td></tr>
-            <tr class="fund-row"><td>HDFC Focused Fund - Direct</td><td><span class="tag core">Core</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:4px"></div><span>2.2%</span></div></td><td class="sip-badge">₹215</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">9 funds — the largest universe. All 13 candidate funds considered, 9 selected by the optimiser. Best Sharpe (0.84) and safest max drawdown (-14.2%). Slightly more complex to manage but most efficient overall.</div>
-    </div>
-
-    <div id="sip" class="panel">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Horizon</th>
-              <th>Total invested</th>
-              <th>R1 Replaced</th>
-              <th>R2 Baseline equal</th>
-              <th>R3 Baseline+replaced</th>
-              <th>R4 All in</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="font-weight:500">10 years</td><td>₹12.0L</td><td>~₹29.6L</td><td>~₹27.1L</td><td>~₹28.5L</td><td class="g1"><strong>₹29.6L</strong></td></tr>
-            <tr class="highlight"><td style="font-weight:500">15 years</td><td>₹18.0L</td><td>₹67.0L <span style="font-size:11px">(3.7×)</span></td><td>₹61.6L <span style="font-size:11px">(3.4×)</span></td><td>₹65.5L <span style="font-size:11px">(3.6×)</span></td><td class="g1"><strong>₹66.1L</strong> <span style="font-size:11px">(3.7×)</span></td></tr>
-            <tr><td style="font-weight:500">20 years</td><td>₹24.0L</td><td>₹1.75 Cr <span style="font-size:11px">(7.3×)</span></td><td>₹1.51 Cr <span style="font-size:11px">(6.3×)</span></td><td>₹1.72 Cr <span style="font-size:11px">(7.2×)</span></td><td class="g1"><strong>₹1.72 Cr</strong> <span style="font-size:11px">(7.2×)</span></td></tr>
-            <tr class="highlight"><td style="font-weight:500">Prob. of loss</td><td>—</td><td class="g1">0.00%</td><td class="g1">0.00%</td><td class="g1">0.00%</td><td class="g1">0.00%</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">All projections are Monte Carlo medians — 50th percentile outcome. The P5 worst-case and P95 best-case vary widely. These are estimates, not guarantees. Past performance of underlying funds does not guarantee future results.</div>
-    </div>
-  </div>
-
-  <p class="disclaimer">This report was generated for research and educational purposes only. Not financial advice. Past performance does not guarantee future results. Consult a SEBI-registered investment adviser before making investment decisions.</p>
+<div class="header">
+  <h1>Portfolio Comparison</h1>
+  <p>4 experiments · ₹10,000/mo SIP · Risk-free rate 6.5% · 16 Mar 2026</p>
 </div>
 
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-label">R1 · Replaced</div>
+    <div class="kpi-val">16.8%</div>
+    <div class="kpi-sub">Sharpe 0.80 · Vol 12.9%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">R2 · Baseline equal</div>
+    <div class="kpi-val">16.2%</div>
+    <div class="kpi-sub">Sharpe 0.62 · Vol 15.7%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">R3 · Baseline + replaced</div>
+    <div class="kpi-val">16.7%</div>
+    <div class="kpi-sub">Sharpe 0.82 · Vol 12.4%</div>
+  </div>
+  <div class="kpi winner">
+    <div class="kpi-label">R4 · All in</div>
+    <div class="kpi-val">16.6%</div>
+    <div class="kpi-sub">Sharpe 0.84 · Vol 12.1%</div>
+    <div class="kpi-badge">★ Best overall</div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="show('compare',this)">Compare</button>
+    <button class="tab" onclick="show('r1',this)">R1 Funds</button>
+    <button class="tab" onclick="show('r2',this)">R2 Funds</button>
+    <button class="tab" onclick="show('r3',this)">R3 Funds</button>
+    <button class="tab" onclick="show('r4',this)">R4 Funds</button>
+    <button class="tab" onclick="show('sip',this)">SIP</button>
+  </div>
+</div>
+
+<!-- COMPARE -->
+<div id="compare" class="panel active">
+
+  <div class="section-title">head-to-head metrics</div>
+
+  <div class="metric-card">
+    <div class="metric-label">Expected annual return</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1 Replaced</div><div class="rval">16.8%</div></div>
+      <div class="metric-cell"><div class="rname">R2 Baseline equal</div><div class="rval">16.2%</div></div>
+      <div class="metric-cell"><div class="rname">R3 Baseline+replaced</div><div class="rval">16.7%</div></div>
+      <div class="metric-cell"><div class="rname">R4 All in</div><div class="rval">16.6%</div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Annual volatility (risk) — lower is better</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval">12.9%</div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val">15.7% <span class="badge b-worst">highest</span></div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval">12.4%</div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val">12.1% <span class="badge b-best">lowest</span></div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Sharpe ratio — higher is better</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval">0.80</div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val">0.62 <span class="badge b-worst">worst</span></div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval">0.82</div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val">0.84 <span class="badge b-best">best</span></div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Max drawdown (worst drop ever)</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval">-19.1%</div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val">-20.7% <span class="badge b-worst">worst</span></div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval">-15.2%</div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val">-14.2% <span class="badge b-best">safest</span></div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">15-yr median wealth (₹10k/mo SIP)</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval">₹67.0L</div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val">₹61.6L</div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval">₹65.5L</div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val">₹66.1L</div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">20-yr median wealth & multiple</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval">₹1.75 Cr<br><span style="font-size:11px;color:var(--txt3)">7.3×</span></div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val">₹1.51 Cr<br><span style="font-size:11px">6.3×</span></div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval">₹1.72 Cr<br><span style="font-size:11px;color:var(--txt3)">7.2×</span></div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val">₹1.72 Cr<br><span style="font-size:11px">7.2×</span></div></div>
+    </div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">No. of funds · Gold ETF · US exposure</div>
+    <div class="metric-row">
+      <div class="metric-cell"><div class="rname">R1</div><div class="rval" style="font-size:13px">6 funds<br>Gold ✓<br>S&P 500 ✓</div></div>
+      <div class="metric-cell"><div class="rname">R2</div><div class="rval worst-val" style="font-size:13px">6 funds<br>Gold ✗<br>S&P 500 ✗</div></div>
+      <div class="metric-cell"><div class="rname">R3</div><div class="rval" style="font-size:13px">11 funds<br>Gold ✓<br>S&P 500 ✓</div></div>
+      <div class="metric-cell"><div class="rname">R4</div><div class="rval best-val" style="font-size:13px">13 funds<br>Gold ✓<br>S&P 500 ✓</div></div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:14px">verdict</div>
+  <div class="verdict-grid">
+    <div class="verdict-card">
+      <div class="verdict-r">R1 · Replaced</div>
+      <div class="verdict-main">Strong & simple</div>
+      <div class="verdict-desc">6 funds, clean portfolio. Best for someone who wants simplicity with excellent risk-return.</div>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-r">R2 · Baseline equal</div>
+      <div class="verdict-main" style="color:var(--red)">Weakest overall</div>
+      <div class="verdict-desc">Highest risk, lowest Sharpe. No gold or US hedge. Equal weights hurt efficiency.</div>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-r">R3 · Baseline + replaced</div>
+      <div class="verdict-main">Very good</div>
+      <div class="verdict-desc">7 funds, second-best Sharpe. Slightly better drawdown than R1. Solid middle ground.</div>
+    </div>
+    <div class="verdict-card winner">
+      <div class="verdict-r">R4 · All in</div>
+      <div class="verdict-main" style="color:var(--accent)">★ Best risk-adjusted</div>
+      <div class="verdict-desc">Best Sharpe (0.84), safest floor (-14.2%). More funds but most efficient allocation.</div>
+    </div>
+  </div>
+
+  <div class="note">Sharpe ratio = return earned per unit of risk. 0.84 vs 0.62 means R4 gives ~35% more return per unit of risk than R2.</div>
+</div>
+
+<!-- R1 FUNDS -->
+<div id="r1" class="panel">
+  <div class="section-title">report 1 — replaced · 6 funds · Sharpe 0.80</div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Kotak Contra Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF174K01KZ9</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Nippon India Growth Mid Cap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">19.5%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,954</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:48.8%"></div></div><div class="pct-label">19.5%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF204K01E54</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Motilal Oswal S&P 500 Index Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF247L01AG2</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Tata Gold Exchange Traded Fund</div>
+      <div class="fund-tags"><span class="tag tag-hedge">Hedge</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF277K01ON6</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">HDFC Focused Fund — Growth Option Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">9.9%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹988</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:24.7%"></div></div><div class="pct-label">9.9%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF179K01VK7</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Nippon India Small Cap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">5.6%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹557</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:14%"></div></div><div class="pct-label">5.6%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118778</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF204K01K15</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- R2 FUNDS -->
+<div id="r2" class="panel">
+  <div class="section-title">report 2 — baseline equal dist · 6 funds · Sharpe 0.62</div>
+  <div class="note" style="margin-bottom:10px">No gold ETF, no US exposure. Roughly equal weights. Weakest risk-adjusted performance of all 4 experiments.</div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Motilal Oswal Midcap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">19.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,903</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:47.5%"></div></div><div class="pct-label">19.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">127042</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF247L01445</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">SBI Contra Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">17.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,697</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:42.4%"></div></div><div class="pct-label">17.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119835</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF200K01RA0</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">HDFC Focused Fund — Growth Option Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF179K01VK7</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Bandhan Small Cap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">147946</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF194KB1AL4</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">ICICI Prudential Large & Mid Cap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120596</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF109K011O5</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Nippon India Large Cap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,600</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40%"></div></div><div class="pct-label">16.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118632</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF204K01XI3</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- R3 FUNDS -->
+<div id="r3" class="panel">
+  <div class="section-title">report 3 — baseline + replaced · 7 funds · Sharpe 0.82</div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Kotak Contra Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF174K01KZ9</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">SBI Small Cap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">16.3%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,633</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:40.8%"></div></div><div class="pct-label">16.3%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">125497</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF200K01T51</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Motilal Oswal S&P 500 Index Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF247L01AG2</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Tata Gold Exchange Traded Fund</div>
+      <div class="fund-tags"><span class="tag tag-hedge">Hedge</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF277K01ON6</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Nippon India Growth Mid Cap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">8.7%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹866</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:21.7%"></div></div><div class="pct-label">8.7%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF204K01E54</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">HDFC Focused Fund — Growth Option Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">6.4%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹644</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:16%"></div></div><div class="pct-label">6.4%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF179K01VK7</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">ICICI Prudential MidCap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">3.6%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹357</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:9%"></div></div><div class="pct-label">3.6%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120381</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF109K011N7</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- R4 FUNDS -->
+<div id="r4" class="panel">
+  <div class="section-title">report 4 — all in · 9 funds selected · Sharpe 0.84 ★</div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Kotak Contra Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val" style="color:var(--accent)">40.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹4,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div><div class="pct-label">40%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119769</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF174K01KZ9</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Motilal Oswal S&P 500 Index Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-satellite">Satellite</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">15.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,500</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:37.5%"></div></div><div class="pct-label">15.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">148381</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF247L01AG2</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Tata Gold Exchange Traded Fund</div>
+      <div class="fund-tags"><span class="tag tag-hedge">Hedge</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.0%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,000</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:25%"></div></div><div class="pct-label">10.0%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">151778</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF277K01ON6</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Nippon India Growth Mid Cap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">10.6%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹1,057</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:26.4%"></div></div><div class="pct-label">10.6%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118668</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF204K01E54</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">SBI Small Cap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">8.9%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹893</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:22.3%"></div></div><div class="pct-label">8.9%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">125497</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF200K01T51</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">Motilal Oswal Midcap Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">5.7%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹565</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:14.2%"></div></div><div class="pct-label">5.7%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">127042</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF247L01445</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">ICICI Prudential MidCap Fund — Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">4.4%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹438</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:11%"></div></div><div class="pct-label">4.4%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">120381</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF109K011N7</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">SBI Contra Fund — Direct Plan Growth</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">3.3%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹332</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:8.3%"></div></div><div class="pct-label">3.3%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">119835</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF200K01RA0</span></div>
+    </div>
+  </div>
+
+  <div class="fund-card">
+    <div class="fund-header">
+      <div class="fund-name">HDFC Focused Fund — Growth Option Direct</div>
+      <div class="fund-tags"><span class="tag tag-core">Core</span></div>
+    </div>
+    <div class="fund-body">
+      <div class="fund-meta">
+        <div class="meta-item"><div class="meta-label">Weight</div><div class="meta-val">2.2%</div></div>
+        <div class="meta-item"><div class="meta-label">Monthly SIP</div><div class="meta-val">₹215</div></div>
+      </div>
+      <div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar-fill" style="width:5.4%"></div></div><div class="pct-label">2.2%</div></div>
+      <div class="code-row" style="margin-top:10px"><span class="code-label">Scheme Code</span><span class="code-val">118950</span></div>
+      <div class="code-row"><span class="code-label">ISIN</span><span class="code-val">INF179K01VK7</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIP PROJECTIONS -->
+<div id="sip" class="panel">
+  <div class="section-title">sip wealth projections — ₹10,000 / month</div>
+
+  <div class="sip-card">
+    <div class="sip-header">10 years · Total invested ₹12.0L</div>
+    <div class="sip-row">
+      <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
+    </div>
+    <div class="sip-row">
+      <div class="sip-cell">~₹29.6L</div><div class="sip-cell">~₹27.1L</div><div class="sip-cell">~₹28.5L</div><div class="sip-cell highlight">₹29.6L</div>
+    </div>
+  </div>
+
+  <div class="sip-card">
+    <div class="sip-header">15 years · Total invested ₹18.0L</div>
+    <div class="sip-row">
+      <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
+    </div>
+    <div class="sip-row">
+      <div class="sip-cell">₹67.0L<br><span style="font-size:10px;color:var(--txt3)">3.7×</span></div>
+      <div class="sip-cell">₹61.6L<br><span style="font-size:10px;color:var(--txt3)">3.4×</span></div>
+      <div class="sip-cell">₹65.5L<br><span style="font-size:10px;color:var(--txt3)">3.6×</span></div>
+      <div class="sip-cell highlight">₹66.1L<br><span style="font-size:10px">3.7×</span></div>
+    </div>
+  </div>
+
+  <div class="sip-card">
+    <div class="sip-header">20 years · Total invested ₹24.0L</div>
+    <div class="sip-row">
+      <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
+    </div>
+    <div class="sip-row">
+      <div class="sip-cell">₹1.75 Cr<br><span style="font-size:10px;color:var(--txt3)">7.3×</span></div>
+      <div class="sip-cell">₹1.51 Cr<br><span style="font-size:10px;color:var(--txt3)">6.3×</span></div>
+      <div class="sip-cell">₹1.72 Cr<br><span style="font-size:10px;color:var(--txt3)">7.2×</span></div>
+      <div class="sip-cell highlight">₹1.72 Cr<br><span style="font-size:10px">7.2×</span></div>
+    </div>
+  </div>
+
+  <div class="sip-card">
+    <div class="sip-header">Probability of loss at 20 years</div>
+    <div class="sip-row">
+      <div class="sip-cell head">R1</div><div class="sip-cell head">R2</div><div class="sip-cell head">R3</div><div class="sip-cell head">R4</div>
+    </div>
+    <div class="sip-row">
+      <div class="sip-cell highlight">0.00%</div><div class="sip-cell highlight">0.00%</div><div class="sip-cell highlight">0.00%</div><div class="sip-cell highlight">0.00%</div>
+    </div>
+  </div>
+
+  <div class="note">Projections are Monte Carlo medians (50th percentile). Actual results depend on market conditions, expense ratios, and rebalancing. Rebalance quarterly when any fund drifts ±5% from target weight.</div>
+</div>
+
+<p class="disclaimer">For research & educational purposes only · Not financial advice · Consult a SEBI-registered investment adviser before investing</p>
+
 <script>
-function show(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
